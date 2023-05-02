@@ -2,34 +2,10 @@
 
 require_once('constants.php');
 require_once('class/c_list_job.php');
-$halaman = ($_GET['halaman']) ?? 1;
 $lokasi = ($_GET['lokasi']) ?? null;
-$keyword = ($_GET['keyword']) ?? null;
-$dt = strtotime("now");
-$c_list_jobs = new CListJob($lokasi, $keyword, $halaman);
+$c_list_jobs = new CListJob($lokasi);
 
 $list_jobs = $c_list_jobs->get();
-
-$param_search = "?dt=$dt";
-$param_halaman = "";
-
-if ($lokasi != "") {
-    $param_search .= "&lokasi=$lokasi";
-}
-
-if ($keyword != "") {
-    $param_search .= "&keyword=$keyword";
-}
-
-if ($halaman) {
-    $param_halaman = "&halaman=$halaman";
-}
-
-
-
-// echo '<pre>' . print_r($param_search, 1) . '</pre>';
-// exit;
-
 ?>
 
 <!DOCTYPE html>
@@ -38,472 +14,49 @@ if ($halaman) {
 <head>
 
     <title>Job List - Career at FAP AGRI - FAP AGRI Career</title>
-    <meta name="description" content="Give impact while doing what you&#39;re capable of. View open job at FAP AGRI in Indonesia">
-    <meta itemprop="name" content="Career at FAP AGRI - FAP AGRI Career">
-    <meta itemprop="description" content="Give impact while doing what you&#39;re capable of. View open job at FAP AGRI in Indonesia.">
-    <meta name="twitter:title" content="Career at FAP AGRI - FAP AGRI Career">
-    <meta name="twitter:description" content="Give impact while doing what you&#39;re capable of. View open job at FAP AGRI in Indonesia.">
-    <meta property="og:title" content="Career at FAP AGRI - FAP AGRI Career">
-    <meta property="og:description" content="Give impact while doing what you&#39;re capable of. View open job at FAP AGRI in Indonesia.">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-    <style>
-        @font-face {
-            font-family: gojekicon;
-            src: url(fonts/qfcnRo0rar5S.eot);
-            src: url(fonts/SCE9CjYnMYfg.woff2) format("woff2"), url(fonts/qfcnRo0rar5S.eot#iefix) format("embedded-opentype"), url(fonts/jROGyYYgRhXA.ttf) format("truetype"), url(fonts/14JJsDtvMKWO.woff) format("woff"), url(fonts/1ib8DMby29F6.svg#gojekicon) format("svg");
-            font-display: swap;
-            font-weight: 400;
-            font-style: normal
-        }
+    <?php
+    include "components/meta.php";
+    include "components/favicon.php";
+    ?>
 
-        i {
-            font-family: gojekicon !important;
-            font-style: normal;
-            font-weight: 400;
-            font-variant: normal;
-            text-transform: none;
-            line-height: 1;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale
-        }
-
-        .gi-website:before {
-            content: "";
-            color: #4a4a4a
-        }
-
-        .gi-xs {
-            font-size: .5rem
-        }
-
-        .gi-sm {
-            font-size: .75rem
-        }
-
-        .gi-md {
-            font-size: 1rem
-        }
-
-        .gi-lg {
-            font-size: 1.5rem
-        }
-
-        .gi-xl {
-            font-size: 2rem
-        }
-
-        .gi-icon-solid-gobills:before {
-            content: ""
-        }
-
-        .gi-icon-solid-gobiz:before {
-            content: ""
-        }
-
-        .gi-icon-solid-gocar:before {
-            content: ""
-        }
-
-        .gi-icon-solid-godeals:before {
-            content: ""
-        }
-
-        .gi-icon-solid-gofood:before {
-            content: ""
-        }
-
-        .gi-icon-solid-golaundry:before {
-            content: ""
-        }
-
-        .gi-icon-solid-gopay:before {
-            content: ""
-        }
-
-        .gi-icon-solid-goplay:before {
-            content: ""
-        }
-
-        .gi-icon-solid-gopoint:before {
-            content: ""
-        }
-
-        .gi-icon-solid-goride:before {
-            content: ""
-        }
-
-        .gi-icon-solid-gosend:before {
-            content: ""
-        }
-
-        .gi-icon-solid-gotix:before {
-            content: ""
-        }
-
-        .gi-icon-gobills:before {
-            content: ""
-        }
-
-        .gi-icon-gobiz:before {
-            content: ""
-        }
-
-        .gi-icon-gocar:before {
-            content: ""
-        }
-
-        .gi-icon-godeals:before {
-            content: ""
-        }
-
-        .gi-icon-gofood:before {
-            content: ""
-        }
-
-        .gi-icon-gojek:before {
-            content: ""
-        }
-
-        .gi-icon-golaundry:before {
-            content: ""
-        }
-
-        .gi-icon-gopay:before {
-            content: ""
-        }
-
-        .gi-icon-goplay:before {
-            content: ""
-        }
-
-        .gi-icon-gopoints:before {
-            content: ""
-        }
-
-        .gi-icon-goride:before {
-            content: ""
-        }
-
-        .gi-icon-gosend:before {
-            content: ""
-        }
-
-        .gi-icon-gotix:before {
-            content: ""
-        }
-
-        .gi-account:before {
-            content: ""
-        }
-
-        .gi-code:before {
-            content: ""
-        }
-
-        .gi-dashboard:before {
-            content: ""
-        }
-
-        .gi-form:before {
-            content: ""
-        }
-
-        .gi-hi:before {
-            content: ""
-        }
-
-        .gi-logout:before {
-            content: ""
-        }
-
-        .gi-user:before {
-            content: ""
-        }
-
-        .gi-arrow-upload:before {
-            content: ""
-        }
-
-        .gi-pdf:before {
-            content: ""
-        }
-
-        .gi-calendar:before {
-            content: ""
-        }
-
-        .gi-triangle-down:before {
-            content: ""
-        }
-
-        .gi-upload:before {
-            content: ""
-        }
-
-        .gi-tick:before {
-            content: ""
-        }
-
-        .gi-error:before {
-            content: ""
-        }
-
-        .gi-search:before {
-            content: ""
-        }
-
-        .gi-arrow-up:before {
-            content: ""
-        }
-
-        .gi-arrowbar-down:before {
-            content: ""
-        }
-
-        .gi-arrowbar-left:before {
-            content: ""
-        }
-
-        .gi-arrowbar-right:before {
-            content: ""
-        }
-
-        .gi-arrowbar-up:before {
-            content: ""
-        }
-
-        .gi-caret-down:before {
-            content: ""
-        }
-
-        .gi-caret-left:before {
-            content: ""
-        }
-
-        .gi-caret-right:before {
-            content: ""
-        }
-
-        .gi-caret-up:before {
-            content: ""
-        }
-
-        .gi-menu:before {
-            content: ""
-        }
-
-        .gi-retry:before {
-            content: ""
-        }
-
-        .gi-close:before {
-            content: ""
-        }
-
-        .gi-location:before {
-            content: ""
-        }
-
-        .gi-arrow:before {
-            content: ""
-        }
-
-        .gi-facebook:before {
-            content: ""
-        }
-
-        .gi-instagram:before {
-            content: ""
-        }
-
-        .gi-line:before {
-            content: ""
-        }
-
-        .gi-linkedin:before {
-            content: ""
-        }
-
-        .gi-twitter:before {
-            content: ""
-        }
-
-        .gi-web:before {
-            content: ""
-        }
-
-        .gi-youtube:before {
-            content: ""
-        }
-
-        .gi-arrow-left:before {
-            content: ""
-        }
-
-        .gi-arrow-right:before {
-            content: ""
-        }
-
-        .gi-globe:before {
-            content: ""
-        }
-
-        .gi-arrow-down:before {
-            content: ""
-        }
-
-        @font-face {
-            font-family: MaisonNeue-Book;
-            src: url(fonts/Gp3Gu8wkLEoN.woff2) format("woff2"), url(fonts/xThyTxm7sWw7.woff) format("woff"), url(bZz5ktl0LO5F.otf) format("opentype");
-            font-weight: 400;
-            font-style: normal;
-            font-display: swap
-        }
-
-        @font-face {
-            font-family: MaisonNeue-Book;
-            src: url(fonts/Uc2VRdBZy1LT.woff2) format("woff2"), url(fonts/ucIrMWzejGLx.woff) format("woff"), url(s1aEIKeVKAju.otf) format("opentype");
-            font-weight: 700;
-            font-style: normal;
-            font-display: swap
-        }
-
-        @font-face {
-            font-family: MaisonNeue-Book;
-            src: url(fonts/0H0Hf1QJQ1jY.woff2) format("woff2"), url(fonts/QD4B26PtZ1ey.woff) format("woff"), url(kYrlzGPMgJFj.otf) format("opentype");
-            font-weight: 400;
-            font-style: italic;
-            font-display: swap
-        }
-
-        @font-face {
-            font-family: MaisonNeue-Demi;
-            src: url(fonts/tVyS8nB6UCxh.woff2) format("woff2"), url(fonts/bot9UupgwCcq.woff) format("woff"), url(pYofit6XH429.otf) format("opentype");
-            font-weight: 400;
-            font-style: normal;
-            font-display: swap
-        }
-
-        @font-face {
-            font-family: MaisonNeueExtended-Bold;
-            src: url(fonts/LYGCnF2fWDyl.woff2) format("woff2"), url(fonts/YhLJbKx1ap7t.woff) format("woff"), url(L4smXnZH5dIX.otf) format("opentype");
-            font-weight: 400;
-            font-style: normal;
-            font-display: swap
-        }
-
-        /*# sourceMappingURL=maps/fonts.css.map */
-    </style>
+    <link rel="stylesheet" href="css/2023-05-01 - template.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="shortcut icon" href="https://career.fap-agri.com/public/favicon.ico" type="image/x-icon">
+
 
 
 </head>
 
 <body>
-    <!-- Google Tag Manager (noscript) -->
-
-    <!-- End Google Tag Manager (noscript) -->
-
-    <header class="c-header c-header--gocareer c-header--gocareer__white">
-        <div class="container">
-            <div class="row align-items-center c-header__menu">
-                <div class="col">
-                    <a href="https://career.fap-agri.com/frontpage/">
-                        <picture class="c-header__logo">
-                            <source srcset="images/fap-agri-career-navbar.png" media="(max-width: 768px)">
-                            <img src="images/fap-agri-career-navbar.png" alt="FAP-Agri career logo">
-                        </picture>
-                    </a>
-                </div>
-                <div class="col-9 u-hide--tablet">
-                    <?php
-                    require('components/navbar.php');
-                    ?>
-                </div>
-            </div>
-        </div>
-        <div class="c-header--gocareer__hamburger c-header--gocareer__hamburger--white u-hide--desktop js-side-menu" data-target="js-content-side-munu"></div>
-        <div class="c-header--gocareer__side-menu c-header--gocareer__side-menu--white u-hide--desktop" id="js-content-side-munu">
-            <div class="wrapper">
-                <div class="wrapper__header row align-items-center">
-                    <div clas="col">
-                        <img src="images/t2LAH9odCtAr.png" alt="logo FAP-Agri career">
-                    </div>
-                    <div class="wrapper__header__close js-side-menu" data-target="js-content-side-munu"></div>
-                </div>
-                <div class="wrapper__list-menu">
-                    <ul>
-                        <li class="active">
-                            <a href="#">Home</a>
-                        </li>
-                        <li>
-                            <a href="https://career.fap-agri.com/frontpage/job-list.php">Job List</a>
-                        </li>
-
-                        <div class="col-auto">
-                            <a href="https://fap-agri.com/">Website</a>
-                        </div>
-                        <div class="col-auto">
-                            <a href="https://career.fap-agri.com/frontpage/form-pelamar.php">Formulir</a>
-                        </div>
-
-                        <!--<div class="col-auto">
-                        <a href="https://career.fap-agri.com/">Login</a>
-                    </div> -->
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </header>
-
-
-
-
-
-    <section class="c-section c-banner-slider--hero mb-0">
-        <div class="row js-slider-banner" data-slider-dot="true">
-
-            <div class="col c-banner-slider--hero__wrapper">
-                <picture>
-                    <source src="images/1jKsECHMBc2y.jpg" srcset="images/ro0ID5rO7wU8.jpg 400w, images/mE8VG8U5bRuY.jpg 800w, images/1jKsECHMBc2y.jpg 3000w" media="(min-width: 769px)" alt="FAP-AGRI-CAREER">
-                    <img data-src="images/hero-banner012x_3.jpg" data-srcset="images/hero-banner012x_3.jpg 400w, images/hero-banner012x_3.jpg 800w, images/hero-banner012x_3.jpg 3000w" class="lazy" alt="FAP-AGRI-CAREER">
-                </picture>
-                <div class="container">
-                    <div class="row c-banner-slider--hero__content">
-                        <div class="col-12 col-md-5">
-                            <h1 class="mb-2">Kesempatan Berkarir Bersama FAP Agri</h1>
-                            <p>FAP Agri memiliki komitmen untuk menghasilkan produk berkualitas, ramah lingkungan dengan berpegang teguh pada tata kelola yang baik untuk mencapai kinerja unggul, mewujudkan kesejahteraan karyawan, serta menjadikan masyarakat mitra setara yang saling menguntungkan.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
+    <?php
+    include "components/header.php";
+    include "pages/job-list/";
+    ?>
 
 
     <section class="c-section c-section--small--mb u-position u-position--sticky-top u-position--sticky-top--sec-top ">
-        <form action="<?= APP_URL; ?>/job-list.php<?= $param_search; ?>" method="GET" id="js-form-search">
+        <form action="/job/search/" method="GET" id="js-form-search">
             <div class="c-card--full-width">
                 <div class="container">
                     <div class="row c-search justify-content-md-center">
 
                         <div class="col-12 col-md-5 align-self-center u-hide--mobile" id="js-filter-desktop">
                             <div class="d-flex">
+
+
+
                             </div>
                         </div>
 
 
                         <div class="col-12 col-md-7 align-self-center d-flex">
                             <div class="c-search__group  ml-0 ml-md-2 mr-2 mr-md-0 ">
-                                <input type="text" name="keyword" class="field-search" placeholder="Search Position..." value="<?= $keyword; ?>">
+                                <input type="text" name="q" class="field-search" placeholder="Search Position..." value>
+                                <input type="hidden" name="country" id="val-country" value>
+                                <input type="hidden" name="city" id="val-city" value>
                                 <button class="btn-search" type="submit">
                                     <i class="icon-search"></i>
-                                    <span class="u-hide--mobile">
-                                        Cari
+                                    <span class="u-hide--mobile">Cari
                                     </span>
                                 </button>
                             </div>
@@ -596,6 +149,11 @@ if ($halaman) {
                         <div class="col-12 col-md-3 u-hide--mobile pr-0 pr-md-2">
                             <div class="u-position u-position--sticky-top u-position--sticky-top--ter-top">
 
+
+
+
+
+
                                 <div class="c-filter--card">
                                     <div class="row">
                                         <div class="col-12">
@@ -603,7 +161,7 @@ if ($halaman) {
                                                 <span class="u-font-weight__bold c-filter--card__selectbox__label">Kota</span>
                                                 <div class="c-dropdown">
                                                     <p class="u-fg--gocareer c-filter--card__selectbox__info js-dropdown js-menu-downtop" data-target="city">
-                                                        <?= ($lokasi == "") ? "Semua Lokasi" : $lokasi; ?>
+                                                        Pilih Kota
                                                     </p>
                                                     <?php
                                                     $unique_lokasis = $c_list_jobs->get_unique_lokasi();
@@ -643,7 +201,8 @@ if ($halaman) {
                         <div class="col-12 col-md-9 c-job-list">
 
                             <?php
-                            if (count($list_jobs['data']) == 0) {
+                            $list_jobs = $c_list_jobs->get();
+                            if (!$list_jobs) {
                             ?>
                                 <div class="row">
                                     <h1>Job List Empty. Come back again later</h1>
@@ -651,7 +210,7 @@ if ($halaman) {
                             <?php } else { ?>
                                 <?php
                                 $no = 1;
-                                foreach ($list_jobs['data'] as $list_job) {
+                                foreach ($list_jobs as $list_job) {
                                 ?>
                                     <div class="row">
                                         <div class="col-12 c-job-list__item">
@@ -668,8 +227,8 @@ if ($halaman) {
                                                             <div class="row">
                                                                 <div class="col-12 col-md-6 ">
                                                                     <p class="u-font-weight__bold mb-1 mb-md-0">
-                                                                        <a href="<?= APP_URL; ?>/job-detail.php">
-                                                                            <?= $list_job['nama_jabatan']; ?> - <?= $list_job['skill']; ?>
+                                                                        <a href="<?= APP_URL; ?>/form-pelamar.php">
+                                                                            <?= $list_job['jabatan']; ?> - <?= $list_job['skill']; ?>
                                                                         </a>
                                                                     </p>
                                                                 </div>
@@ -695,103 +254,58 @@ if ($halaman) {
                     </div>
 
 
-                    <?php
-                    if ($list_jobs['total_halaman'] > 1) {
-                    ?>
-                        <div class="row justify-content-center mb-1 mb-md-0">
-                            <div class="c-pagination">
+                    <div class="row justify-content-center mb-1 mb-md-0">
+                        <div class="c-pagination">
 
-                                <div class="col-auto">
+                            <div class="col-auto">
 
-                                    <?php
-                                    if ($list_jobs['halaman'] <= 1) {
-                                    ?>
-                                        <a href="javascript:;" class="u-hide--mobile">
-                                            <button class="prev-end disable"></button>
-                                        </a>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <a href="<?= APP_URL . "/job-list.php" . $param_search . "&halaman=1"; ?>" class="u-hide--mobile">
-                                            <button class="prev-end"></button>
-                                        </a>
-                                    <?php
-                                    }
-                                    ?>
+                                <a>
+                                    <button class="prev-end disable"></button>
+                                </a>
 
-                                    <?php
-                                    if ($list_jobs['halaman'] <= 1) {
-                                    ?>
-                                        <a href="javascript:;" class="u-hide--mobile">
-                                            <button class="prev disable"></button>
-                                        </a>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <a href="<?= APP_URL . "/job-list.php" . $param_search . "&halaman=" . $list_jobs['prev']; ?>" class="u-hide--mobile">
-                                            <button class="prev"></button>
-                                        </a>
-                                    <?php
-                                    }
-                                    ?>
 
-                                </div>
 
-                                <div class="col">
-                                    <?php
-                                    for ($x = 1; $x <= $list_jobs['total_halaman']; $x++) {
-                                    ?>
-                                        <a href="<?= APP_URL . "/job-list.php" . $param_search . "&halaman=" . $x; ?>">
-                                            <button class="<?= ($x == $list_jobs['halaman']) ? "active" : null; ?>">
-                                                <?= $x; ?>
-                                            </button>
-                                        </a>
-                                    <?php
-                                    }
-                                    ?>
-                                </div>
-
-                                <div class="col-auto">
-
-                                    <?php
-                                    if ($list_jobs['halaman'] >= $list_jobs['total_halaman']) {
-                                    ?>
-                                        <a href="javascript:;">
-                                            <button class="next disable"></button>
-                                        </a>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <a href="<?= APP_URL . "/job-list.php" . $param_search . "&halaman=" . $list_jobs['next']; ?>" class="u-hide--mobile">
-                                            <button class="next"></button>
-                                        </a>
-                                    <?php
-                                    }
-                                    ?>
-
-                                    <?php
-                                    if ($list_jobs['halaman'] >= $list_jobs['total_halaman']) {
-                                    ?>
-                                        <a href="javascript:;" class="u-hide--mobile">
-                                            <button class="next-end disable"></button>
-                                        </a>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <a href="<?= APP_URL . "/job-list.php" . $param_search . "&halaman=" . $list_jobs['total_halaman']; ?>" class="u-hide--mobile">
-                                            <button class="next-end"></button>
-                                        </a>
-                                    <?php
-                                    }
-                                    ?>
-
-                                </div>
+                                <a class="u-hide--mobile">
+                                    <button class="prev disable"></button>
+                                </a>
 
                             </div>
+
+                            <div class="col">
+
+
+                                <a>
+                                    <button class="active">1</button>
+                                </a>
+
+
+
+                                <a href="#"><button>2</button></a>
+
+
+
+                                <a href="#"><button>3</button></a>
+
+
+                            </div>
+
+                            <div class="col-auto">
+
+                                <a href="#" class="u-hide--mobile">
+                                    <button class="next"></button>
+                                </a>
+
+
+
+                                <a href="#">
+                                    <button class="next-end"></button>
+                                </a>
+
+
+                            </div>
+
                         </div>
-                    <?php
-                    }
-                    ?>
+                    </div>
 
                 </div>
             </div>

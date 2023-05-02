@@ -1,0 +1,1 @@
+<link rel="shortcut icon" href="https://career.fap-agri.com/public/favicon.ico" type="image/x-icon">

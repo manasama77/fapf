@@ -2,34 +2,10 @@
 
 require_once('constants.php');
 require_once('class/c_list_job.php');
-$halaman = ($_GET['halaman']) ?? 1;
 $lokasi = ($_GET['lokasi']) ?? null;
-$keyword = ($_GET['keyword']) ?? null;
-$dt = strtotime("now");
-$c_list_jobs = new CListJob($lokasi, $keyword, $halaman);
+$c_list_jobs = new CListJob($lokasi);
 
 $list_jobs = $c_list_jobs->get();
-
-$param_search = "?dt=$dt";
-$param_halaman = "";
-
-if ($lokasi != "") {
-    $param_search .= "&lokasi=$lokasi";
-}
-
-if ($keyword != "") {
-    $param_search .= "&keyword=$keyword";
-}
-
-if ($halaman) {
-    $param_halaman = "&halaman=$halaman";
-}
-
-
-
-// echo '<pre>' . print_r($param_search, 1) . '</pre>';
-// exit;
-
 ?>
 
 <!DOCTYPE html>
@@ -486,24 +462,28 @@ if ($halaman) {
 
 
     <section class="c-section c-section--small--mb u-position u-position--sticky-top u-position--sticky-top--sec-top ">
-        <form action="<?= APP_URL; ?>/job-list.php<?= $param_search; ?>" method="GET" id="js-form-search">
+        <form action="/job/search/" method="GET" id="js-form-search">
             <div class="c-card--full-width">
                 <div class="container">
                     <div class="row c-search justify-content-md-center">
 
                         <div class="col-12 col-md-5 align-self-center u-hide--mobile" id="js-filter-desktop">
                             <div class="d-flex">
+
+
+
                             </div>
                         </div>
 
 
                         <div class="col-12 col-md-7 align-self-center d-flex">
                             <div class="c-search__group  ml-0 ml-md-2 mr-2 mr-md-0 ">
-                                <input type="text" name="keyword" class="field-search" placeholder="Search Position..." value="<?= $keyword; ?>">
+                                <input type="text" name="q" class="field-search" placeholder="Search Position..." value>
+                                <input type="hidden" name="country" id="val-country" value>
+                                <input type="hidden" name="city" id="val-city" value>
                                 <button class="btn-search" type="submit">
                                     <i class="icon-search"></i>
-                                    <span class="u-hide--mobile">
-                                        Cari
+                                    <span class="u-hide--mobile">Cari
                                     </span>
                                 </button>
                             </div>
@@ -596,6 +576,11 @@ if ($halaman) {
                         <div class="col-12 col-md-3 u-hide--mobile pr-0 pr-md-2">
                             <div class="u-position u-position--sticky-top u-position--sticky-top--ter-top">
 
+
+
+
+
+
                                 <div class="c-filter--card">
                                     <div class="row">
                                         <div class="col-12">
@@ -603,7 +588,7 @@ if ($halaman) {
                                                 <span class="u-font-weight__bold c-filter--card__selectbox__label">Kota</span>
                                                 <div class="c-dropdown">
                                                     <p class="u-fg--gocareer c-filter--card__selectbox__info js-dropdown js-menu-downtop" data-target="city">
-                                                        <?= ($lokasi == "") ? "Semua Lokasi" : $lokasi; ?>
+                                                        Pilih Kota
                                                     </p>
                                                     <?php
                                                     $unique_lokasis = $c_list_jobs->get_unique_lokasi();
@@ -643,7 +628,8 @@ if ($halaman) {
                         <div class="col-12 col-md-9 c-job-list">
 
                             <?php
-                            if (count($list_jobs['data']) == 0) {
+                            $list_jobs = $c_list_jobs->get();
+                            if (!$list_jobs) {
                             ?>
                                 <div class="row">
                                     <h1>Job List Empty. Come back again later</h1>
@@ -651,7 +637,7 @@ if ($halaman) {
                             <?php } else { ?>
                                 <?php
                                 $no = 1;
-                                foreach ($list_jobs['data'] as $list_job) {
+                                foreach ($list_jobs as $list_job) {
                                 ?>
                                     <div class="row">
                                         <div class="col-12 c-job-list__item">
@@ -668,8 +654,8 @@ if ($halaman) {
                                                             <div class="row">
                                                                 <div class="col-12 col-md-6 ">
                                                                     <p class="u-font-weight__bold mb-1 mb-md-0">
-                                                                        <a href="<?= APP_URL; ?>/job-detail.php">
-                                                                            <?= $list_job['nama_jabatan']; ?> - <?= $list_job['skill']; ?>
+                                                                        <a href="<?= APP_URL; ?>/form-pelamar.php">
+                                                                            <?= $list_job['jabatan']; ?> - <?= $list_job['skill']; ?>
                                                                         </a>
                                                                     </p>
                                                                 </div>
@@ -695,103 +681,58 @@ if ($halaman) {
                     </div>
 
 
-                    <?php
-                    if ($list_jobs['total_halaman'] > 1) {
-                    ?>
-                        <div class="row justify-content-center mb-1 mb-md-0">
-                            <div class="c-pagination">
+                    <div class="row justify-content-center mb-1 mb-md-0">
+                        <div class="c-pagination">
 
-                                <div class="col-auto">
+                            <div class="col-auto">
 
-                                    <?php
-                                    if ($list_jobs['halaman'] <= 1) {
-                                    ?>
-                                        <a href="javascript:;" class="u-hide--mobile">
-                                            <button class="prev-end disable"></button>
-                                        </a>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <a href="<?= APP_URL . "/job-list.php" . $param_search . "&halaman=1"; ?>" class="u-hide--mobile">
-                                            <button class="prev-end"></button>
-                                        </a>
-                                    <?php
-                                    }
-                                    ?>
+                                <a>
+                                    <button class="prev-end disable"></button>
+                                </a>
 
-                                    <?php
-                                    if ($list_jobs['halaman'] <= 1) {
-                                    ?>
-                                        <a href="javascript:;" class="u-hide--mobile">
-                                            <button class="prev disable"></button>
-                                        </a>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <a href="<?= APP_URL . "/job-list.php" . $param_search . "&halaman=" . $list_jobs['prev']; ?>" class="u-hide--mobile">
-                                            <button class="prev"></button>
-                                        </a>
-                                    <?php
-                                    }
-                                    ?>
 
-                                </div>
 
-                                <div class="col">
-                                    <?php
-                                    for ($x = 1; $x <= $list_jobs['total_halaman']; $x++) {
-                                    ?>
-                                        <a href="<?= APP_URL . "/job-list.php" . $param_search . "&halaman=" . $x; ?>">
-                                            <button class="<?= ($x == $list_jobs['halaman']) ? "active" : null; ?>">
-                                                <?= $x; ?>
-                                            </button>
-                                        </a>
-                                    <?php
-                                    }
-                                    ?>
-                                </div>
-
-                                <div class="col-auto">
-
-                                    <?php
-                                    if ($list_jobs['halaman'] >= $list_jobs['total_halaman']) {
-                                    ?>
-                                        <a href="javascript:;">
-                                            <button class="next disable"></button>
-                                        </a>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <a href="<?= APP_URL . "/job-list.php" . $param_search . "&halaman=" . $list_jobs['next']; ?>" class="u-hide--mobile">
-                                            <button class="next"></button>
-                                        </a>
-                                    <?php
-                                    }
-                                    ?>
-
-                                    <?php
-                                    if ($list_jobs['halaman'] >= $list_jobs['total_halaman']) {
-                                    ?>
-                                        <a href="javascript:;" class="u-hide--mobile">
-                                            <button class="next-end disable"></button>
-                                        </a>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <a href="<?= APP_URL . "/job-list.php" . $param_search . "&halaman=" . $list_jobs['total_halaman']; ?>" class="u-hide--mobile">
-                                            <button class="next-end"></button>
-                                        </a>
-                                    <?php
-                                    }
-                                    ?>
-
-                                </div>
+                                <a class="u-hide--mobile">
+                                    <button class="prev disable"></button>
+                                </a>
 
                             </div>
+
+                            <div class="col">
+
+
+                                <a>
+                                    <button class="active">1</button>
+                                </a>
+
+
+
+                                <a href="#"><button>2</button></a>
+
+
+
+                                <a href="#"><button>3</button></a>
+
+
+                            </div>
+
+                            <div class="col-auto">
+
+                                <a href="#" class="u-hide--mobile">
+                                    <button class="next"></button>
+                                </a>
+
+
+
+                                <a href="#">
+                                    <button class="next-end"></button>
+                                </a>
+
+
+                            </div>
+
                         </div>
-                    <?php
-                    }
-                    ?>
+                    </div>
 
                 </div>
             </div>
