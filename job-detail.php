@@ -2,32 +2,17 @@
 
 require_once('constants.php');
 require_once('class/c_list_job.php');
-$halaman = ($_GET['halaman']) ?? 1;
-$lokasi = ($_GET['lokasi']) ?? null;
-$keyword = ($_GET['keyword']) ?? null;
-$dt = strtotime("now");
+$id = ($_GET['id']) ?? null;
+
+if ($id == "") {
+    return header("location:" . APP_URL . "/job-list.php");
+}
+
 $c_list_jobs = new CListJob();
 
-$list_jobs = $c_list_jobs->get($lokasi, $keyword, $halaman);
+$job = $c_list_jobs->show($id);
 
-$param_search = "?dt=$dt";
-$param_halaman = "";
-
-if ($lokasi != "") {
-    $param_search .= "&lokasi=$lokasi";
-}
-
-if ($keyword != "") {
-    $param_search .= "&keyword=$keyword";
-}
-
-if ($halaman) {
-    $param_halaman = "&halaman=$halaman";
-}
-
-
-
-// echo '<pre>' . print_r($param_search, 1) . '</pre>';
+// echo '<pre>' . print_r($list_jobs, 1) . '</pre>';
 // exit;
 
 ?>
@@ -37,7 +22,7 @@ if ($halaman) {
 
 <head>
 
-    <title>Job List - Career at FAP AGRI - FAP AGRI Career</title>
+    <title>Job Detail - Career at FAP AGRI - FAP AGRI Career</title>
     <meta name="description" content="Give impact while doing what you&#39;re capable of. View open job at FAP AGRI in Indonesia">
     <meta itemprop="name" content="Career at FAP AGRI - FAP AGRI Career">
     <meta itemprop="description" content="Give impact while doing what you&#39;re capable of. View open job at FAP AGRI in Indonesia.">
@@ -47,6 +32,9 @@ if ($halaman) {
     <meta property="og:description" content="Give impact while doing what you&#39;re capable of. View open job at FAP AGRI in Indonesia.">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!-- Bootstrap CSS -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous"> -->
 
     <style>
         @font-face {
@@ -396,6 +384,7 @@ if ($halaman) {
 
         /*# sourceMappingURL=maps/fonts.css.map */
     </style>
+
     <link rel="stylesheet" href="css/main.css">
     <link rel="shortcut icon" href="https://career.fap-agri.com/public/favicon.ico" type="image/x-icon">
 
@@ -403,10 +392,6 @@ if ($halaman) {
 </head>
 
 <body>
-    <!-- Google Tag Manager (noscript) -->
-
-    <!-- End Google Tag Manager (noscript) -->
-
     <header class="c-header c-header--gocareer c-header--gocareer__white">
         <div class="container">
             <div class="row align-items-center c-header__menu">
@@ -484,325 +469,49 @@ if ($halaman) {
         </div>
     </section>
 
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-sm-8 pr-3">
+                <h3 class="mt-2">
+                    <?= $job['kode_jabatan']; ?> - <?= $job['nama_jabatan']; ?>
+                </h3>
+                <hr />
 
-    <section class="c-section c-section--small--mb u-position u-position--sticky-top u-position--sticky-top--sec-top ">
-        <form action="<?= APP_URL; ?>/job-list.php<?= $param_search; ?>" method="GET" id="js-form-search">
-            <div class="c-card--full-width">
-                <div class="container">
-                    <div class="row c-search justify-content-md-center">
+                <h4 class="mt-2">Job Description</h4>
+                <p>
+                    <?= $job['informasi_pekerjaan']; ?>
+                </p>
 
-                        <div class="col-12 col-md-5 align-self-center u-hide--mobile" id="js-filter-desktop">
-                            <div class="d-flex">
-                            </div>
-                        </div>
+                <h4 class="mt-2">Key Responsibilities</h4>
+                <p>
+                    <?= $job['tugas']; ?>
+                </p>
 
-
-                        <div class="col-12 col-md-7 align-self-center d-flex">
-                            <div class="c-search__group  ml-0 ml-md-2 mr-2 mr-md-0 ">
-                                <input type="text" name="keyword" class="field-search" placeholder="Search Position..." value="<?= $keyword; ?>">
-                                <button class="btn-search" type="submit">
-                                    <i class="icon-search"></i>
-                                    <span class="u-hide--mobile">
-                                        Cari
-                                    </span>
-                                </button>
-                            </div>
-
-                            <span class="icon-filter align-self-center js-switch-filter u-hide--desktop" data-target="switch-filter"></span>
-
-                        </div>
-
-                    </div>
+                <div class="d-flex justify-content-center mt-5">
+                    <a href="<?= APP_URL; ?>/job-apply.php?id=<?= $job['id']; ?>">
+                        <button class="btn-gocareer btn-default btn-default--theme-gocareer">
+                            Apply for Job
+                        </button>
+                    </a>
                 </div>
             </div>
-        </form>
-
-
-    </section>
-
-
-    <div class="u-hide--desktop" id="js-filter-mobile">
-        <div class="c-menu-downtop" id="switch-filter-mobile">
-            <div class="c-menu-downtop__content">
-                <div class="c-menu-downtop__content__header u-text-align__center">
-                    <span class="u-icon--swipe"></span>
-                </div>
-                <div class="c-menu-downtop__content__body c-menu-downtop__content__body--with-footer">
-
-
-
-                    <div class="c-list-downtop">
-                        <p class="c-list-downtop__header">Kota</p>
-                        <ul class="c-list-downtop__group" id="list-item-city-mobile">
-                            <li class="list-item js-item-country" id="list-item-country-all" data-target="country" data-value="all" data-title="Semua Kota">
-                                <a href="javascript:;">Semua Kota</a>
-                            </li>
-                        </ul>
+            <div class="col-sm-4">
+                <div class="c-card">
+                    <div class="c-card__body p-2">
+                        <h3 class="mb-2">Job Overview</h3>
+                        <p class="mb-2">Posted date:<br /><?= $job['tgl_posted']; ?></p>
+                        <p class="mb-2">Expiration date:<br /><?= $job['tgl_dibutuhkan']; ?></p>
+                        <p class="mb-2">Departemen:<br /><?= $job['nama_departemen']; ?></p>
+                        <p class="mb-2">Location:<br /><?= $job['lokasi']; ?></p>
+                        <p class="mb-2">Employee Status:<br /><?= $job['status_karyawan']; ?></p>
+                        <p class="mb-2">Experience:<br /><?= $job['pengalaman']; ?> years</p>
+                        <p class="mb-2">Age Requirement:<br /><?= $job['usia_min']; ?> ~ <?= $job['usia_max']; ?> years</p>
+                        <p class="mb-2">Gender:<br /><?= $job['jk']; ?></p>
                     </div>
-                </div>
-                <div class="c-menu-downtop__content__footer">
-                    <div class="row">
-                        <div class="col">
-                            <button class="btn-default btn-gocareer btn-default--theme-gocareer js-close-menu" type="button" data-target="switch-filter-mobile">Cancel</button>
-                        </div>
-
-                        <div class="col pl-1">
-                            <button class="btn-default btn-gocareer btn-default--theme-gocareer js-ok-filter" type="button" data-target="switch-filter">OK</button>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
     </div>
-
-
-
-    <section class="c-section px-2">
-        <div class="container">
-            <div class="row">
-
-
-
-                <div class="col-12 pl-0 pl-md-2">
-
-
-                    <div class="row align-items-center c-toolbar c-toolbar--menu c-toolbar--theme-gocareer mb-3 u-hide--desktop js-menu-downtop" data-target="city">
-                        <div class="col-3">
-                            <p><i class="c-toolbar__icon icon-location"></i></p>
-                        </div>
-                        <div class="col-6">
-                            <p class="">
-                                Pilih Kota
-                            </p>
-                        </div>
-                        <div class="col-3">
-                            <p><i class="c-toolbar__icon icon-caret-down"></i></p>
-                        </div>
-                    </div>
-
-                    <div class="row mb-0 mb-md-4">
-                        <div class="col-12 col-md-5 align-self-center offset-md-3">
-                            <h2 class="mb-2 mb-md-0 u-title--jobs">
-                                Job list
-                            </h2>
-                        </div>
-                    </div>
-
-                    <hr class="c-hr mt-2 mb-2 mt-md-3 mb-md-3 offset-md-3">
-
-                    <div class="row">
-
-                        <div class="col-12 col-md-3 u-hide--mobile pr-0 pr-md-2">
-                            <div class="u-position u-position--sticky-top u-position--sticky-top--ter-top">
-
-                                <div class="c-filter--card">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="c-filter--card__selectbox">
-                                                <span class="u-font-weight__bold c-filter--card__selectbox__label">Kota</span>
-                                                <div class="c-dropdown">
-                                                    <p class="u-fg--gocareer c-filter--card__selectbox__info js-dropdown js-menu-downtop" data-target="city">
-                                                        <?= ($lokasi == "") ? "Semua Lokasi" : $lokasi; ?>
-                                                    </p>
-                                                    <?php
-                                                    $unique_lokasis = $c_list_jobs->get_unique_lokasi();
-                                                    ?>
-                                                    <div class="c-dropdown__list">
-                                                        <ul class="u-hide--mobile">
-                                                            <li class="list-item">
-                                                                <a href="<?= APP_URL; ?>/job-list.php?lokasi=">
-                                                                    Semua Lokasi
-                                                                </a>
-                                                            </li>
-                                                            <?php
-                                                            foreach ($unique_lokasis as $unique_lokasi) {
-                                                            ?>
-                                                                <li class="list-item">
-                                                                    <a href="<?= APP_URL; ?>/job-list.php?lokasi=<?= $unique_lokasi['lokasi']; ?>">
-                                                                        <?= $unique_lokasi['lokasi']; ?>
-                                                                    </a>
-                                                                </li>
-                                                            <?php
-                                                            }
-                                                            ?>
-
-                                                        </ul>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="col-12 col-md-9 c-job-list">
-
-                            <?php
-                            if (count($list_jobs['data']) == 0) {
-                            ?>
-                                <div class="row">
-                                    <h1>Job List Empty. Come back again later</h1>
-                                </div>
-                            <?php } else { ?>
-                                <?php
-                                $no = 1;
-                                foreach ($list_jobs['data'] as $list_job) {
-                                ?>
-                                    <div class="row">
-                                        <div class="col-12 c-job-list__item">
-                                            <div class="c-card">
-                                                <div class="c-card__body p-2">
-                                                    <div class="row">
-                                                        <div class="col-1 u-text-align__center--desktop">
-                                                            <p class="u-font-weight__bold u-fg--goride">
-                                                                <?= $no++; ?>
-                                                            </p>
-                                                        </div>
-
-                                                        <div class="col-11">
-                                                            <div class="row">
-                                                                <div class="col-12 col-md-6 ">
-                                                                    <p class="u-font-weight__bold mb-1 mb-md-0">
-                                                                        <a href="<?= APP_URL; ?>/job-detail.php?id=<?= $list_job['id']; ?>">
-                                                                            <?= $list_job['nama_jabatan']; ?>
-                                                                        </a>
-                                                                    </p>
-                                                                </div>
-                                                                <div class="col-12 col-md-6 align-self-center">
-                                                                    <div class="row">
-                                                                        <div class="col-6 col-md-6 u-text-align__center--desktop">
-                                                                            <p class="u-font-10--mb u-font-weight__bold u-fg--goride">Kota</p>
-                                                                            <p><?= $list_job['lokasi']; ?></p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                <?php } ?>
-                            <?php } ?>
-                        </div>
-                    </div>
-
-
-                    <?php
-                    if ($list_jobs['total_halaman'] > 1) {
-                    ?>
-                        <div class="row justify-content-center mb-1 mb-md-0">
-                            <div class="c-pagination">
-
-                                <div class="col-auto">
-
-                                    <?php
-                                    if ($list_jobs['halaman'] <= 1) {
-                                    ?>
-                                        <a href="javascript:;" class="u-hide--mobile">
-                                            <button class="prev-end disable"></button>
-                                        </a>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <a href="<?= APP_URL . "/job-list.php" . $param_search . "&halaman=1"; ?>" class="u-hide--mobile">
-                                            <button class="prev-end"></button>
-                                        </a>
-                                    <?php
-                                    }
-                                    ?>
-
-                                    <?php
-                                    if ($list_jobs['halaman'] <= 1) {
-                                    ?>
-                                        <a href="javascript:;" class="u-hide--mobile">
-                                            <button class="prev disable"></button>
-                                        </a>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <a href="<?= APP_URL . "/job-list.php" . $param_search . "&halaman=" . $list_jobs['prev']; ?>" class="u-hide--mobile">
-                                            <button class="prev"></button>
-                                        </a>
-                                    <?php
-                                    }
-                                    ?>
-
-                                </div>
-
-                                <div class="col">
-                                    <?php
-                                    for ($x = 1; $x <= $list_jobs['total_halaman']; $x++) {
-                                    ?>
-                                        <a href="<?= APP_URL . "/job-list.php" . $param_search . "&halaman=" . $x; ?>">
-                                            <button class="<?= ($x == $list_jobs['halaman']) ? "active" : null; ?>">
-                                                <?= $x; ?>
-                                            </button>
-                                        </a>
-                                    <?php
-                                    }
-                                    ?>
-                                </div>
-
-                                <div class="col-auto">
-
-                                    <?php
-                                    if ($list_jobs['halaman'] >= $list_jobs['total_halaman']) {
-                                    ?>
-                                        <a href="javascript:;">
-                                            <button class="next disable"></button>
-                                        </a>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <a href="<?= APP_URL . "/job-list.php" . $param_search . "&halaman=" . $list_jobs['next']; ?>" class="u-hide--mobile">
-                                            <button class="next"></button>
-                                        </a>
-                                    <?php
-                                    }
-                                    ?>
-
-                                    <?php
-                                    if ($list_jobs['halaman'] >= $list_jobs['total_halaman']) {
-                                    ?>
-                                        <a href="javascript:;" class="u-hide--mobile">
-                                            <button class="next-end disable"></button>
-                                        </a>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <a href="<?= APP_URL . "/job-list.php" . $param_search . "&halaman=" . $list_jobs['total_halaman']; ?>" class="u-hide--mobile">
-                                            <button class="next-end"></button>
-                                        </a>
-                                    <?php
-                                    }
-                                    ?>
-
-                                </div>
-
-                            </div>
-                        </div>
-                    <?php
-                    }
-                    ?>
-
-                </div>
-            </div>
-
-            <form action="#" method="GET" id="js-form-filter">
-                <input type="hidden" name="country" id="val-country" value="">
-                <input type="hidden" name="city" id="val-city" value="">
-
-            </form>
-        </div>
-    </section>
 
 
 
@@ -912,6 +621,11 @@ if ($halaman) {
             </center>
         </div>
     </footer>
+
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script> -->
 
 
 
