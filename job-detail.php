@@ -394,53 +394,15 @@ $job = $c_list_jobs->show($id);
 <body>
     <header class="c-header c-header--gocareer c-header--gocareer__white">
         <div class="container">
-            <div class="row align-items-center c-header__menu">
-                <div class="col">
-                    <a href="https://career.fap-agri.com/frontpage/">
-                        <picture class="c-header__logo">
-                            <source srcset="images/fap-agri-career-navbar.png" media="(max-width: 768px)">
-                            <img src="images/fap-agri-career-navbar.png" alt="FAP-Agri career logo">
-                        </picture>
-                    </a>
-                </div>
-                <div class="col-9 u-hide--tablet">
-                    <?php
-                    require('components/navbar.php');
-                    ?>
-                </div>
-            </div>
+            <?php
+            require('components/navbar.php');
+            ?>
         </div>
         <div class="c-header--gocareer__hamburger c-header--gocareer__hamburger--white u-hide--desktop js-side-menu" data-target="js-content-side-munu"></div>
         <div class="c-header--gocareer__side-menu c-header--gocareer__side-menu--white u-hide--desktop" id="js-content-side-munu">
-            <div class="wrapper">
-                <div class="wrapper__header row align-items-center">
-                    <div clas="col">
-                        <img src="images/t2LAH9odCtAr.png" alt="logo FAP-Agri career">
-                    </div>
-                    <div class="wrapper__header__close js-side-menu" data-target="js-content-side-munu"></div>
-                </div>
-                <div class="wrapper__list-menu">
-                    <ul>
-                        <li class="active">
-                            <a href="#">Home</a>
-                        </li>
-                        <li>
-                            <a href="https://career.fap-agri.com/frontpage/job-list.php">Job List</a>
-                        </li>
-
-                        <div class="col-auto">
-                            <a href="https://fap-agri.com/">Website</a>
-                        </div>
-                        <div class="col-auto">
-                            <a href="https://career.fap-agri.com/frontpage/form-pelamar.php">Formulir</a>
-                        </div>
-
-                        <!--<div class="col-auto">
-                        <a href="https://career.fap-agri.com/">Login</a>
-                    </div> -->
-                    </ul>
-                </div>
-            </div>
+            <?php
+            require('components/navbar_mobile.php');
+            ?>
         </div>
     </header>
 
@@ -448,7 +410,7 @@ $job = $c_list_jobs->show($id);
 
 
 
-    <section class="c-section c-banner-slider--hero mb-0">
+    <!-- <section class="c-section c-banner-slider--hero mb-0">
         <div class="row js-slider-banner" data-slider-dot="true">
 
             <div class="col c-banner-slider--hero__wrapper">
@@ -467,7 +429,7 @@ $job = $c_list_jobs->show($id);
             </div>
 
         </div>
-    </section>
+    </section> -->
 
     <div class="container my-5">
         <div class="row">
@@ -487,10 +449,15 @@ $job = $c_list_jobs->show($id);
                     <?= $job['tugas']; ?>
                 </p>
 
-                <div class="d-flex justify-content-center mt-5">
+                <div class="d-flex flex-column justify-content-center align-items-center mt-5">
                     <a href="<?= APP_URL; ?>/job-apply.php?id=<?= $job['id']; ?>">
                         <button class="btn-gocareer btn-default btn-default--theme-gocareer">
                             Apply for Job
+                        </button>
+                    </a>
+                    <a href="<?= APP_URL; ?>/job-list.php" class="my-2">
+                        <button class="btn-gocareer btn-default btn-outline--theme-gocareer">
+                            Back to List
                         </button>
                     </a>
                 </div>
@@ -507,6 +474,7 @@ $job = $c_list_jobs->show($id);
                         <p class="mb-2">Experience:<br /><?= $job['pengalaman']; ?> years</p>
                         <p class="mb-2">Age Requirement:<br /><?= $job['usia_min']; ?> ~ <?= $job['usia_max']; ?> years</p>
                         <p class="mb-2">Gender:<br /><?= $job['jk']; ?></p>
+                        <p class="mb-2">Education:<br /><?= $job['pendidikan']; ?></p>
                     </div>
                 </div>
             </div>

@@ -1,170 +1,322 @@
 <?php
-    // getting all values from the HTML form
-    
-    $target_dir = "upload/file_cv/";
-    $target_file = $target_dir . basename($_FILES["file"]["name"]);
-    $target_dir_surat = "upload/file_surat/";
-    $target_file_surat = $target_dir_surat . basename($_FILES["file_surat"]["name"]);
-    
-        
-        
-        
-        
-    if(isset($_POST['submit']))
-    {
-        
-        $tgl_input = date("Y-m-d H:i:s");
-        $fname = $_POST['fname'];
-        $lname = $_POST['lname'];
-        $nama_lengkap = $_POST['fname'] .' '. $_POST['lname'];
-        $jk = $_POST['jk'];
-        $national = $_POST['national'];
-        $tempat_lahir = $_POST['tempat_lahir'];
-        $tgl_lahir = $_POST['tgl_lahir'];
-        $alamat = $_POST['alamat'];
-        $email_address = $_POST['email'];
-        $email = $_POST['email'];
-        $hp = $_POST['hp'];
-        $pendidikan = $_POST['pendidikan'];
-        $jurusan = $_POST['jurusan'];
-        $jurusan_sawit = $_POST['jurusan_sawit'];
-        $ipk = $_POST['ipk'];
-        $max_ipk = $_POST['max_ipk'];
-        $status_universitas = $_POST['status_universitas'];
-        $status = 1;
-        $lokasi_univ = $_POST['lokasi_univ'];
-        $pengalaman = $_POST['pengalaman'];
-        $pengalaman_kebun = $_POST['pengalaman_kebun'];
-        $lokasi_kalimantan = $_POST['lokasi_kalimantan'];
-        $file_cv = $_FILES["file"]["name"];
-        $file_surat = $_FILES["file_surat"]["name"];
-        //$nama_file = $_FILES["file"]["name"];
-    
-       if (file_exists($target_file) && file_exists($target_file_surat)) {
-        echo "file already exists Yes.<br>";
-        $uOk = 0;
-            }
-            
-                  
-                // $_FILES["file"]["tmp_name"] implies storage path
-                // in tmp directory which is moved to uploads
-                // directory using move_uploaded_file() method
-                if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file) && move_uploaded_file($_FILES["file_surat"]["tmp_name"], $target_file_surat)) {
-                    echo "The file ". basename( $_FILES["file"]["name"])
-                                . " has been uploaded Yes.<br>";
-                      
-                    // Moving file to New directory 
-                    /*if(rename($target_file, "New/". 
-                                basename( $_FILES["file"]["name"]))) {
-                        echo "File moving operation success<br>";
-                    }
-                    else {
-                        echo "File moving operation failed..<br>";
-                    }*/
-                }
-                else {
-                    echo "Sorry, there was an error uploading your file Yes.<br>";
-                }
-            
+session_start();
+include("koneksi.php");
+// getting all values from the HTML form
+$all_input = $_POST;
 
-    }else{
-        
-        $tgl_input = date("Y-m-d H:i:s");
-        $fname = $_POST['fname'];
-        $lname = $_POST['lname'];
-        $nama_lengkap = $_POST['fname'] .' '. $_POST['lname'];
-        $jk = $_POST['jk'];
-        $national = $_POST['national'];
-        $tempat_lahir = $_POST['tempat_lahir'];
-        $tgl_lahir = $_POST['tgl_lahir'];
-        $alamat = $_POST['alamat'];
-        $email_address = $_POST['email'];
-        $email = $_POST['email'];
-        $hp = $_POST['hp'];
-        $pendidikan = $_POST['pendidikan'];
-        $jurusan = $_POST['jurusan'];
-        $jurusan_sawit = $_POST['jurusan_sawit'];
-        $ipk = $_POST['ipk'];
-        $max_ipk = $_POST['max_ipk'];
-        $status_universitas = $_POST['status_universitas'];
-        $status = 1;
-        $lokasi_univ = $_POST['lokasi_univ'];
-        $pengalaman = $_POST['pengalaman'];
-        $pengalaman_kebun = $_POST['pengalaman_kebun'];
-        $lokasi_kalimantan = $_POST['lokasi_kalimantan'];
-        $file_cv = $_FILES["file"]["name"];
-        $file_surat = $_FILES["file_surat"]["name"];
-        //$nama_file = $_FILES["file"]["tmp_name"];
+//validasi
+$error = 0;
+if (empty($_POST['fname'])) {
+    $msg                   = "First Name Required";
+    $_SESSION['err_fname'] = $msg;
+    $error                 = 1;
+} elseif (empty($_POST['lname'])) {
+    $msg                   = "Last Name Required";
+    $_SESSION['err_fname'] = $msg;
+    $error                 = 1;
+} elseif (empty($_POST['jk'])) {
+    $msg                   = "Jenis Kelamin Required";
+    $_SESSION['err_fname'] = $msg;
+    $error                 = 1;
+} elseif (empty($_POST['national'])) {
+    $msg                      = "Nationality Required";
+    $_SESSION['err_national'] = $msg;
+    $error                    = 1;
+} elseif (empty($_POST['tempat_lahir'])) {
+    $msg                          = "Place Of Birth Required";
+    $_SESSION['err_tempat_lahir'] = $msg;
+    $error                        = 1;
+} elseif (empty($_POST['tgl_lahir'])) {
+    $msg                       = "Date Of Birth Required";
+    $_SESSION['err_tgl_lahir'] = $msg;
+    $error                     = 1;
+} elseif (empty($_POST['alamat'])) {
+    $msg                       = "Current Address Required";
+    $_SESSION['err_alamat'] = $msg;
+    $error                     = 1;
+} elseif (empty($_POST['email'])) {
+    $msg                       = "Email Required";
+    $_SESSION['err_email'] = $msg;
+    $error                     = 1;
+} elseif (empty($_POST['hp'])) {
+    $msg                       = "Mobile Number Required";
+    $_SESSION['err_hp'] = $msg;
+    $error                     = 1;
+} elseif (empty($_POST['pendidikan'])) {
+    $msg                        = "Highest Education Degree Required";
+    $_SESSION['err_pendidikan'] = $msg;
+    $error                      = 1;
+} elseif (empty($_POST['jurusan'])) {
+    $msg                     = "Major Required";
+    $_SESSION['err_jurusan'] = $msg;
+    $error                   = 1;
+} elseif (empty($_POST['ipk'])) {
+    $msg                 = "GPA/IPK Required";
+    $_SESSION['err_ipk'] = $msg;
+    $error               = 1;
+} elseif (empty($_POST['max_ipk'])) {
+    $msg                     = "Max GPA/IPK Required";
+    $_SESSION['err_max_ipk'] = $msg;
+    $error                   = 1;
+} elseif (empty($_POST['status_universitas'])) {
+    $msg                                = "Status Universitas Required";
+    $_SESSION['err_status_universitas'] = $msg;
+    $error                              = 1;
+} elseif (empty($_POST['lokasi_univ'])) {
+    $msg                         = "Lokasi Universitas Required";
+    $_SESSION['err_lokasi_univ'] = $msg;
+    $error                       = 1;
+} elseif (empty($_POST['jurusan_sawit'])) {
+    $msg                           = "Jurusan berkaitan dengan Sawit Required";
+    $_SESSION['err_jurusan_sawit'] = $msg;
+    $error                         = 1;
+} elseif (empty($_POST['pengalaman'])) {
+    $msg                        = "Tahun Pengalaman Kerja Required";
+    $_SESSION['err_pengalaman'] = $msg;
+    $error                      = 1;
+} elseif (empty($_POST['pengalaman_kebun'])) {
+    $msg                              = "Tahun Pengalaman Kerja di Perkebunan Required";
+    $_SESSION['err_pengalaman_kebun'] = $msg;
+    $error                            = 1;
+} elseif (empty($_POST['lokasi_kalimantan'])) {
+    $msg                               = "Bersedia ditempatkan di Kalimantan Required";
+    $_SESSION['err_lokasi_kalimantan'] = $msg;
+    $error                             = 1;
+}
 
-        
-       if (file_exists($target_file) && file_exists($target_file_surat) ) {
-        echo "file already exists.<br>";
-        $uOk = 0;
-            }
-              
-                  
-                // $_FILES["file"]["tmp_name"] implies storage path
-                // in tmp directory which is moved to uploads
-                // directory using move_uploaded_file() method
-                if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file) && move_uploaded_file($_FILES["file_surat"]["tmp_name"], $target_file_surat) ) {
-                    echo "The file ". basename( $_FILES["file"]["name"])
-                                . " has been uploaded.<br>";
-                      
-                    // Moving file to New directory 
-                    /*if(rename($target_file, "New/". 
-                                basename( $_FILES["file"]["name"]))) {
-                        echo "File moving operation success<br>";
-                    }
-                    else {
-                        echo "File moving operation failed..<br>";
-                    }*/
-                }
-                else {
-                    echo "Sorry, there was an error uploading your file $target_file.<br>";
-                }
-      
+if (!file_exists($_FILES['file']['tmp_name']) || !is_uploaded_file($_FILES['file']['tmp_name'])) {
+    $msg                  = "File CV Required";
+    $_SESSION['err_file'] = $msg;
+    $error                = 1;
+} elseif (isset($_FILES['file'])) {
+    if ($_FILES['file']['size'] > 3145728) {
+        $msg                  = "File CV Size more then 3 MB Required";
+        $_SESSION['err_file'] = $msg;
+        $error                = 1;
+    }
+}
+
+if (!file_exists($_FILES['file_surat']['tmp_name']) || !is_uploaded_file($_FILES['file_surat']['tmp_name'])) {
+    $msg                        = "File Application Letter Required";
+    $_SESSION['err_file_surat'] = $msg;
+    $error                      = 1;
+} elseif (isset($_FILES['file_surat'])) {
+    if ($_FILES['file_surat']['size'] > 3145728) {
+        $msg                        = "File Application Letter Size more then 3 MB Required";
+        $_SESSION['err_file_surat'] = $msg;
+        $error                      = 1;
+    }
+}
+
+if ($error == 1) {
+    $_SESSION['old'] = $_POST;
+    return header('location: job-apply.php');
+}
+
+if (isset($_POST['submit'])) {
+
+    $target_dir  = "upload/file_cv/";
+    $cv_filename = basename(time() . $_FILES["file"]["name"]);
+    $target_file = $target_dir . $cv_filename;
+
+    $target_dir_surat  = "upload/file_surat/";
+    $file_surat        = basename(time() . $_FILES["file_surat"]["name"]);
+    $target_file_surat = $target_dir_surat . $file_surat;
+
+    if (!move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
+        $msg                  = "Upload CV Failed, please try reupload again...";
+        $_SESSION['err_file'] = $msg;
+        $_SESSION['old']      = $_POST;
+        return header('location: job-apply.php');
+    } elseif (!move_uploaded_file($_FILES["file_surat"]["tmp_name"], $target_file_surat)) {
+        $msg                        = "Upload Application Letter Failed, please try reupload again...";
+        $_SESSION['err_file_surat'] = $msg;
+        $_SESSION['old']            = $_POST;
+        return header('location: job-apply.php');
+    } elseif (file_exists($target_file)) {
+        $msg                  = "File CV already exist, please rename the file or try another file...";
+        $_SESSION['err_file'] = $msg;
+        $_SESSION['old']      = $_POST;
+    } elseif (file_exists($target_file_surat)) {
+        $msg                        = "File Application Letter already exist, please rename the file or try another file...";
+        $_SESSION['err_file_surat'] = $msg;
+        $_SESSION['old']            = $_POST;
     }
 
-    // database details
-    $host = "localhost";
-    $username = "u1673034_hrm";
-    $password = "hrm@212#";
-    $dbname = "u1673034_hrm";
+    $tgl_input          = date("Y-m-d H:i:s");
+    $fname              = $_POST['fname'];
+    $lname              = $_POST['lname'];
+    $nama_lengkap       = $_POST['fname'] . ' ' . $_POST['lname'];
+    $jk                 = $_POST['jk'];
+    $national           = $_POST['national'];
+    $tempat_lahir       = $_POST['tempat_lahir'];
+    $tgl_lahir          = $_POST['tgl_lahir'];
+    $alamat             = $_POST['alamat'];
+    $email_address      = $_POST['email'];
+    $email              = $_POST['email'];
+    $hp                 = $_POST['hp'];
+    $pendidikan         = $_POST['pendidikan'];
+    $jurusan            = $_POST['jurusan'];
+    $jurusan_sawit      = $_POST['jurusan_sawit'];
+    $ipk                = $_POST['ipk'];
+    $max_ipk            = $_POST['max_ipk'];
+    $status_universitas = $_POST['status_universitas'];
+    $status             = 1;
+    $lokasi_univ        = $_POST['lokasi_univ'];
+    $pengalaman         = $_POST['pengalaman'];
+    $pengalaman_kebun   = $_POST['pengalaman_kebun'];
+    $lokasi_kalimantan  = $_POST['lokasi_kalimantan'];
+    $file_cv            = $_FILES["file"]["name"];
+    $file_surat         = $_FILES["file_surat"]["name"];
 
-    // creating a connection
-    $con = mysqli_connect($host, $username, $password, $dbname);
+    $sql = "
+    INSERT INTO t_pelamar 
+    (
+        tgl_input,
+        email_address,
+        email,
+        nama_lengkap,
+        fname,
+        lname,
+        jk,
+        national,
+        hp,
+        tempat_lahir,
+        tgl_lahir,
+        alamat,
+        provinsi,
+        kota,
+        pendidikan,
+        universitas,
+        status_universitas,
+        lokasi_univ,
+        jurusan,
+        jurusan_sawit,
+        ipk,
+        max_ipk,
+        posisi,
+        status_pernikahan,
+        nama_ayah,
+        pekerjaan_ayah,
+        nama_ibu,
+        pekerjaan_ibu,
+        penempatan,
+        motivasi,
+        tujuan,
+        kelebihan,
+        kekurangan,
+        file_cv,
+        file_surat,
+        fileupload,
+        fileupload2,
+        izin_orang_tua,
+        pendaftaran,
+        setuju_orang_tua,
+        tgl_update,
+        updated_by,
+        status,
+        keterangan0,
+        keterangan1,
+        keterangan2,
+        keterangan3,
+        keterangan4,
+        keterangan5,
+        keterangan6,
+        keterangan7,
+        pengalaman,
+        pengalaman_kebun,
+        lokasi_kalimantan,
+        tgl_interview,
+        activation_code
+    ) VALUES (
+        '$tgl_input',
+        '$email_address',
+        '$email',
+        '$nama_lengkap',
+        '$fname',
+        '$lname',
+        '$jk',
+        '$national',
+        '$hp',
+        '$tempat_lahir',
+        '$tgl_lahir',
+        '$alamat',
+        null,
+        null,
+        '$pendidikan',
+        '$universitas',
+        '$status_universitas',
+        '$lokasi_univ',
+        '$jurusan',
+        '$jurusan_sawit',
+        '$ipk',
+        '$max_ipk',
+        '$posisi',
+        null,
+        null,
+        null,
+        null,
+        null,
+        '$penempatan',
+        null,
+        null,
+        null,
+        null,
+        '$file_cv',
+        '$file_surat',
+        null,
+        null,
+        null,
+        '$pendaftaran',
+        null,
+        null,
+        null,
+        '$status',
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        '$pengalaman',
+        '$pengalaman_kebun',
+        '$lokasi_kalimantan',
+        null,
+        null
+    )";
 
-    // to ensure that the connection is made
-    if (!$con)
-    {
-        die("Connection failed!" . mysqli_connect_error());
+    $query = $conn->query($sql);
+
+    if (!$query) {
+        $msg             = "Terjadi kesalahan dengan server silahkan coba kembali...";
+        $_SESSION['err'] = $msg;
+        $_SESSION['old'] = $_POST;
+        return header('location: job-apply.php');
     }
-    
-    // using sql to create a data entry query
-    //move_upload_file($file_cv, 'upload/file_cv/'. $file_cv); //folder file CV
-    
-    $sql = "INSERT INTO t_pelamar ( tgl_input, email_address, email, nama_lengkap, fname, lname, jk, national, hp, tempat_lahir, tgl_lahir, alamat, pendidikan, status_universitas, lokasi_univ, jurusan, jurusan_sawit, ipk, max_ipk, file_cv, file_surat, status, pengalaman, pengalaman_kebun, lokasi_kalimantan) VALUES ( '$tgl_input','$email_address','$email','$nama_lengkap','$fname', '$lname','$jk', '$national', '$hp', '$tempat_lahir', '$tgl_lahir', '$alamat', '$pendidikan', '$status_universitas', '$lokasi_univ', '$jurusan', '$jurusan_sawit', '$ipk', '$max_ipk', '$file_cv', '$file_surat', '$status', '$pengalaman', '$pengalaman_kebun', '$lokasi_kalimantan')";
-    
-    // send query to the database to add values and confirm if successful
-    $rs = mysqli_query($con, $sql);
-    if($rs)
-    {
-        echo "Selamat Data Anda Sudah Terkirim, Akan Kami Proses Segera...!";
-    } 
-    
-    else  { 
-        echo "Data Anda Kurang, Silahkan Lengkapi Dahulu...!";
-    }
-    
-    // ambil data file
-    $file_cv = $_FILES['berkas']['file_cv'];
-    $file_surat = $_FILES['berkas']['file_surat'];
 
-    // tentukan lokasi file akan dipindahkan
-    $dirUpload = "frontpage/terupload/";
+    echo $sql;
+    exit;
+}
 
-  
-    // close connection
-    mysqli_close($con);
 
-?>
+
+// send query to the database to add values and confirm if successful
+// $rs = mysqli_query($con, $sql);
+// if ($rs) {
+//     echo "Selamat Data Anda Sudah Terkirim, Akan Kami Proses Segera...!";
+// } else {
+//     echo "Data Anda Kurang, Silahkan Lengkapi Dahulu...!";
+// }
+
+// ambil data file
+// $file_cv = $_FILES['berkas']['file_cv'];
+// $file_surat = $_FILES['berkas']['file_surat'];
+
+// // tentukan lokasi file akan dipindahkan
+// $dirUpload = "frontpage/terupload/";
+
+
+// // close connection
+// mysqli_close($con);

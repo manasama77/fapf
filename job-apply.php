@@ -1,43 +1,21 @@
 <?php
+session_start();
 
-require_once('constants.php');
-require_once('class/c_list_job.php');
-$halaman = ($_GET['halaman']) ?? 1;
-$lokasi = ($_GET['lokasi']) ?? null;
-$keyword = ($_GET['keyword']) ?? null;
-$dt = strtotime("now");
-$c_list_jobs = new CListJob();
+$old['fname'] = "";
+$old['lname'] = "";
 
-$list_jobs = $c_list_jobs->get($lokasi, $keyword, $halaman);
-
-$param_search = "?dt=$dt";
-$param_halaman = "";
-
-if ($lokasi != "") {
-    $param_search .= "&lokasi=$lokasi";
+if (isset($_SESSION['old'])) {
+    foreach ($_SESSION['old'] as $key => $val) {
+        $old[$key] = $val ?? "";
+    }
 }
-
-if ($keyword != "") {
-    $param_search .= "&keyword=$keyword";
-}
-
-if ($halaman) {
-    $param_halaman = "&halaman=$halaman";
-}
-
-
-
-// echo '<pre>' . print_r($param_search, 1) . '</pre>';
-// exit;
-
 ?>
-
 <!DOCTYPE html>
 <html class="no-js">
 
 <head>
 
-    <title>Job List - Career at FAP AGRI - FAP AGRI Career</title>
+    <title>Career at FAP AGRI - FAP AGRI Career</title>
     <meta name="description" content="Give impact while doing what you&#39;re capable of. View open job at FAP AGRI in Indonesia">
     <meta itemprop="name" content="Career at FAP AGRI - FAP AGRI Career">
     <meta itemprop="description" content="Give impact while doing what you&#39;re capable of. View open job at FAP AGRI in Indonesia.">
@@ -49,6 +27,10 @@ if ($halaman) {
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
     <style>
+        .text-danger {
+            color: red;
+        }
+
         @font-face {
             font-family: gojekicon;
             src: url(fonts/qfcnRo0rar5S.eot);
@@ -60,6 +42,7 @@ if ($halaman) {
 
         i {
             font-family: gojekicon !important;
+            speak: none;
             font-style: normal;
             font-weight: 400;
             font-variant: normal;
@@ -396,6 +379,283 @@ if ($halaman) {
 
         /*# sourceMappingURL=maps/fonts.css.map */
     </style>
+    <style>
+        html,
+        body {
+            min-height: 100%;
+        }
+
+        body,
+        div,
+        form,
+        input,
+        select,
+        textarea,
+        label,
+        p {
+            padding: 0;
+            margin: 0;
+            outline: none;
+            font-family: Montserrat, sans-serif;
+            font-size: 14px;
+            color: #666;
+            line-height: 22px;
+        }
+
+        h1 {
+            position: absolute;
+            margin: 0;
+            font-size: 40px;
+            color: #fff;
+            z-index: 2;
+            line-height: 83px;
+        }
+
+        textarea {
+            width: calc(100% - 12px);
+            padding: 5px;
+        }
+
+        .testbox {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: inherit;
+            padding: 20px;
+        }
+
+        form {
+            width: 100%;
+            padding: 20px;
+            border-radius: 6px;
+            background: #fff;
+            box-shadow: 0 0 8px #F48315;
+        }
+
+        .banner {
+            position: relative;
+            height: 350px;
+            background-image: url("images/1jKsECHMBc2y.jpg");
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .banner::after {
+            content: "";
+            background-color: rgba(0, 0, 0, 0.2);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        input,
+        select,
+        textarea {
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        input {
+            width: calc(100% - 10px);
+            padding: 5px;
+        }
+
+        input[type="date"] {
+            padding: 4px 5px;
+        }
+
+        textarea {
+            width: calc(100% - 12px);
+            padding: 5px;
+        }
+
+        .item:hover p,
+        .item:hover i,
+        .question:hover p,
+        .question label:hover,
+        input:hover::placeholder {
+            color: #F48315;
+        }
+
+        .item input:hover,
+        .item select:hover,
+        .item textarea:hover {
+            border: 1px solid transparent;
+            box-shadow: 0 0 3px 0 #F48315;
+            color: #F48315;
+        }
+
+        .item {
+            position: relative;
+            margin: 10px 0;
+        }
+
+        .item span {
+            color: red;
+        }
+
+        .week {
+            display: flex;
+            justfiy-content: space-between;
+        }
+
+        .colums {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .colums div {
+            width: 48%;
+        }
+
+        .colums2 {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .colums2 div {
+            width: 22%;
+        }
+
+        .colums3 {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .colums3 div {
+            width: 13%;
+        }
+
+        input[type="date"]::-webkit-inner-spin-button {
+            display: none;
+        }
+
+        .item i,
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            position: relative;
+            font-size: 20px;
+            color: #a3c2c2;
+        }
+
+        .item i {
+            right: 1%;
+            top: 30px;
+            z-index: 1;
+        }
+
+        input[type=radio],
+        input[type=checkbox] {
+            display: none;
+        }
+
+        label.radio {
+            position: relative;
+            display: flex;
+            margin: 5px 20px 15px 0;
+            cursor: pointer;
+        }
+
+        .question span {
+            margin-left: 30px;
+        }
+
+        .question-answer label {
+            display: block;
+        }
+
+        label.radio:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            border: 2px solid #ccc;
+        }
+
+        input[type=radio]:checked+label:before,
+        label.radio:hover:before {
+            border: 2px solid #F48315;
+        }
+
+        label.radio:after {
+            content: "";
+            position: absolute;
+            top: 6px;
+            left: 5px;
+            width: 8px;
+            height: 4px;
+            border: 3px solid #F48315;
+            border-top: none;
+            border-right: none;
+            transform: rotate(-45deg);
+            opacity: 0;
+        }
+
+        input[type=radio]:checked+label:after {
+            opacity: 1;
+        }
+
+        .flex {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .btn-block {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        button {
+            width: 150px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #F48315;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #a3c2c2;
+        }
+
+        @media (min-width: 568px) {
+
+            .name-item,
+            .city-item {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+
+            .name-item input,
+            .name-item div {
+                width: calc(50% - 20px);
+            }
+
+            .name-item div input {
+                width: 97%;
+            }
+
+            .name-item div label {
+                display: block;
+                padding-bottom: 5px;
+            }
+        }
+    </style>
+
     <link rel="stylesheet" href="css/main.css">
     <link rel="shortcut icon" href="https://career.fap-agri.com/public/favicon.ico" type="image/x-icon">
 
@@ -403,10 +663,6 @@ if ($halaman) {
 </head>
 
 <body>
-    <!-- Google Tag Manager (noscript) -->
-
-    <!-- End Google Tag Manager (noscript) -->
-
     <header class="c-header c-header--gocareer c-header--gocareer__white">
         <div class="container">
             <?php
@@ -422,349 +678,393 @@ if ($halaman) {
     </header>
 
 
-
-
-
-    <section class="c-section c-banner-slider--hero mb-0">
+    <section class="c-section ">
         <div class="row js-slider-banner" data-slider-dot="true">
 
-            <div class="col c-banner-slider--hero__wrapper">
-                <picture>
-                    <source src="images/1jKsECHMBc2y.jpg" srcset="images/ro0ID5rO7wU8.jpg 400w, images/mE8VG8U5bRuY.jpg 800w, images/1jKsECHMBc2y.jpg 3000w" media="(min-width: 769px)" alt="FAP-AGRI-CAREER">
-                    <img data-src="images/hero-banner012x_3.jpg" data-srcset="images/hero-banner012x_3.jpg 400w, images/hero-banner012x_3.jpg 800w, images/hero-banner012x_3.jpg 3000w" class="lazy" alt="FAP-AGRI-CAREER">
-                </picture>
-                <div class="container">
-                    <div class="row c-banner-slider--hero__content">
-                        <div class="col-12 col-md-5">
-                            <h1 class="mb-2">Kesempatan Berkarir Bersama FAP Agri</h1>
-                            <p>FAP Agri memiliki komitmen untuk menghasilkan produk berkualitas, ramah lingkungan dengan berpegang teguh pada tata kelola yang baik untuk mencapai kinerja unggul, mewujudkan kesejahteraan karyawan, serta menjadikan masyarakat mitra setara yang saling menguntungkan.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </section>
 
 
-    <section class="c-section c-section--small--mb u-position u-position--sticky-top u-position--sticky-top--sec-top ">
-        <form action="<?= APP_URL; ?>/job-list.php<?= $param_search; ?>" method="GET" id="js-form-search">
-            <div class="c-card--full-width">
-                <div class="container">
-                    <div class="row c-search justify-content-md-center">
-
-                        <div class="col-12 col-md-5 align-self-center u-hide--mobile" id="js-filter-desktop">
-                            <div class="d-flex">
-                            </div>
-                        </div>
 
 
-                        <div class="col-12 col-md-7 align-self-center d-flex">
-                            <div class="c-search__group  ml-0 ml-md-2 mr-2 mr-md-0 ">
-                                <input type="text" name="keyword" class="field-search" placeholder="Search Position..." value="<?= $keyword; ?>">
-                                <button class="btn-search" type="submit">
-                                    <i class="icon-search"></i>
-                                    <span class="u-hide--mobile">
-                                        Cari
-                                    </span>
-                                </button>
-                            </div>
+    <section class="form">
+        <div class="testbox">
+            <form method="POST" action="form.php" enctype="multipart/form-data">
+                <div class="banner">
+                    <h1>EMPLOYMENT APPLICATION FORM</h1>
+                </div>
+                </br>
+                <h4>I. Biographical </h4>
 
-                            <span class="icon-filter align-self-center js-switch-filter u-hide--desktop" data-target="switch-filter"></span>
+                <div class="colums">
+                    <div class="item">
+                        <label for="fname"> First Name<span>*</span></label>
+                        <input id="fname" type="varchar" name="fname" value="<?= $old['fname']; ?>" />
+                        <span class="text-danger">
+                            <?php
+                            if (isset($_SESSION['err_fname'])) {
+                                echo $_SESSION['err_fname'];
+                                unset($_SESSION['err_fname']);
+                            }
+                            ?>
+                        </span>
+                    </div>
 
-                        </div>
+                    <div class="item">
+                        <label for="lname"> Last Name<span>*</span></label>
+                        <input id="lname" type="varchar" name="lname" value="<?= $old['lname']; ?>" required />
+                        <span class="text-danger">
+                            <?php
+                            if (isset($_SESSION['err_lname'])) {
+                                echo $_SESSION['err_lname'];
+                                unset($_SESSION['err_lname']);
+                            }
+                            ?>
+                        </span>
+                    </div>
 
+                    <div class="item">
+                        <label for="jk">Sex<span>*</span></label>
+                        <select name="jk" required>
+                            <option value=""></option>
+                            <option <?= $old['jk'] == "Male" ? "selected" : ""; ?> value=" Male">Male</option>
+                            <option <?= $old['jk'] == "Female" ? "selected" : ""; ?> value="Female">Female</option>
+                        </select>
+                        <span class="text-danger">
+                            <?php
+                            if (isset($_SESSION['err_jk'])) {
+                                echo $_SESSION['err_jk'];
+                                unset($_SESSION['err_jk']);
+                            }
+                            ?>
+                        </span>
+                    </div>
+
+                    <div class="item">
+                        <label for="national">Nationality<span>*</span></label>
+                        <select name="national" required>
+                            <option value=""></option>
+                            <option <?= $old['national'] == "WNI" ? "selected" : ""; ?> value="WNI">Warga Negara Indonesia</option>
+                            <option <?= $old['national'] == "WNA" ? "selected" : ""; ?> value="WNA">Warga Negara Asing</option>
+                        </select>
+                        <span class="text-danger">
+                            <?php
+                            if (isset($_SESSION['err_national'])) {
+                                echo $_SESSION['err_national'];
+                                unset($_SESSION['err_national']);
+                            }
+                            ?>
+                        </span>
+                    </div>
+
+
+                    <div class="item">
+                        <label for="tempat_lahir"> Place Of Birth<span>*</span></label>
+                        <input id="tempat_lahir" type="varchar" name="tempat_lahir" value="<?= $old['tempat_lahir']; ?>" required />
+                        <span class="text-danger">
+                            <?php
+                            if (isset($_SESSION['err_tempat_lahir'])) {
+                                echo $_SESSION['err_tempat_lahir'];
+                                unset($_SESSION['err_tempat_lahir']);
+                            }
+                            ?>
+                        </span>
+                    </div>
+                    <div class="item">
+                        <label for="tgl_lahir">Date Of Birth<span>*</span></label>
+                        <input id="tgl_lahir" type="date" name="tgl_lahir" value="<?= $old['tgl_lahir']; ?>" required />
+                        <span class="text-danger">
+                            <?php
+                            if (isset($_SESSION['err_tgl_lahir'])) {
+                                echo $_SESSION['err_tgl_lahir'];
+                                unset($_SESSION['err_tgl_lahir']);
+                            }
+                            ?>
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="colums">
+                    <div class="item">
+                        <label for="alamat">Current Address<span>*</span></label>
+                        <input id="alamat" type="varchar" name="alamat" value="<?= $old['alamat']; ?>" required />
+                        <span class="text-danger">
+                            <?php
+                            if (isset($_SESSION['err_alamat'])) {
+                                echo $_SESSION['err_alamat'];
+                                unset($_SESSION['err_alamat']);
+                            }
+                            ?>
+                        </span>
+                    </div>
+                    <div class="item">
+                        <label for="email">Email <span>*</span></label>
+                        <input id="email" type="email" name="email" value="<?= $old['email']; ?>" required />
+                        <span class="text-danger">
+                            <?php
+                            if (isset($_SESSION['err_email'])) {
+                                echo $_SESSION['err_email'];
+                                unset($_SESSION['err_email']);
+                            }
+                            ?>
+                        </span>
+                    </div>
+
+                    <div class="item">
+                        <label for="hp">Mobile Number<span>*</span></label>
+                        <input id="hp" type="number" name="hp" value="<?= $old['hp']; ?>" required />
+                        <span class="text-danger">
+                            <?php
+                            if (isset($_SESSION['err_hp'])) {
+                                echo $_SESSION['err_hp'];
+                                unset($_SESSION['err_hp']);
+                            }
+                            ?>
+                        </span>
                     </div>
                 </div>
-            </div>
-        </form>
 
 
+
+                <h4>II. Education Background</h4>
+
+                <div class="colums2">
+
+                    <div class="item">
+                        <label for="pendidikan">Highest Education Degree<span>*</span></label>
+                        <select name="pendidikan" required>
+                            <option value=""></option>
+                            <option <?= $old['pendidikan'] == "SMA/SMK/Sederajat" ? "selected" : ""; ?> value="SMA/SMK/Sederajat">SMA/SMK/Sederajat</option>
+                            <option <?= $old['pendidikan'] == "D1" ? "selected" : ""; ?> value="D1">D1</option>
+                            <option <?= $old['pendidikan'] == "DIII" ? "selected" : ""; ?> value="DIII">DIII</option>
+                            <option <?= $old['pendidikan'] == "S1/DIV" ? "selected" : ""; ?> value="S1/DIV">S1/DIV</option>
+                            <option <?= $old['pendidikan'] == "S2" ? "selected" : ""; ?> value="S2">S2</option>
+                            <option <?= $old['pendidikan'] == "S3" ? "selected" : ""; ?> value="S3">S3</option>
+                        </select>
+                        <span class="text-danger">
+                            <?php
+                            if (isset($_SESSION['err_pendidikan'])) {
+                                echo $_SESSION['err_pendidikan'];
+                                unset($_SESSION['err_pendidikan']);
+                            }
+                            ?>
+                        </span>
+                    </div>
+
+                    <div class="item">
+                        <label for="jurusan">Major<span>*</span></label>
+                        <input id="jurusan" type="varchar" name="jurusan" value="<?= $old['jurusan']; ?>" required />
+                        <span class="text-danger">
+                            <?php
+                            if (isset($_SESSION['err_jurusan'])) {
+                                echo $_SESSION['err_jurusan'];
+                                unset($_SESSION['err_jurusan']);
+                            }
+                            ?>
+                        </span>
+                    </div>
+                    <div class="item">
+                        <label for="ipk">GPA/IPK<span>*</span></label>
+                        <input id="ipk" type="text" name="ipk" value="<?= $old['ipk']; ?>" required />
+                        <span class="text-danger">
+                            <?php
+                            if (isset($_SESSION['err_jurusan'])) {
+                                echo $_SESSION['err_jurusan'];
+                                unset($_SESSION['err_jurusan']);
+                            }
+                            ?>
+                        </span>
+                    </div>
+                    <div class="item">
+                        <label for="max_ipk">Max GPA/IPK<span>*</span></label>
+                        <input id="max_ipk" type="text" name="max_ipk" value="<?= $old['max_ipk']; ?>" required />
+                        <span class="text-danger">
+                            <?php
+                            if (isset($_SESSION['err_max_ipk'])) {
+                                echo $_SESSION['err_max_ipk'];
+                                unset($_SESSION['err_max_ipk']);
+                            }
+                            ?>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="colums2">
+                    <div class="item">
+                        <label for="status_universitas">Status Universitas<span>*</span></label>
+                        <select name="status_universitas" required>
+                            <option value=""></option>
+                            <option <?= $old['status_universitas'] == "1" ? "selected" : ""; ?> value="1">Negeri</option>
+                            <option <?= $old['status_universitas'] == "2" ? "selected" : ""; ?> value="2">Swasta</option>
+                        </select>
+                        <span class="text-danger">
+                            <?php
+                            if (isset($_SESSION['err_status_universitas'])) {
+                                echo $_SESSION['err_status_universitas'];
+                                unset($_SESSION['err_status_universitas']);
+                            }
+                            ?>
+                        </span>
+                    </div>
+                    <div class="item">
+                        <label for="lokasi_univ">Lokasi Universitas<span>*</span></label>
+                        <select name="lokasi_univ" required>
+                            <option value=""></option>
+                            <option <?= $old['lokasi_univ'] == "1" ? "selected" : ""; ?> value="1">Indonesia</option>
+                            <option <?= $old['lokasi_univ'] == "2" ? "selected" : ""; ?> value="2">Luar Negeri</option>
+                        </select>
+                        <span class="text-danger">
+                            <?php
+                            if (isset($_SESSION['err_lokasi_univ'])) {
+                                echo $_SESSION['err_lokasi_univ'];
+                                unset($_SESSION['err_lokasi_univ']);
+                            }
+                            ?>
+                        </span>
+                    </div>
+                    <div class="item">
+                        <label for="jurusan_sawit">Jurusan berkaitan dengan Sawit?<span>*</span></label>
+                        <select name="jurusan_sawit" required>
+                            <option value=""></option>
+                            <option <?= $old['jurusan_sawit'] == "Y" ? "selected" : ""; ?> value="Y">Yes</option>
+                            <option <?= $old['jurusan_sawit'] == "N" ? "selected" : ""; ?> value="N">No</option>
+                        </select>
+                        <span class="text-danger">
+                            <?php
+                            if (isset($_SESSION['err_jurusan_sawit'])) {
+                                echo $_SESSION['err_jurusan_sawit'];
+                                unset($_SESSION['err_jurusan_sawit']);
+                            }
+                            ?>
+                        </span>
+                    </div>
+                </div>
+
+                </br>
+
+
+                <h4><b> III. Job Experiences </b></h4>
+
+                <div class="colums2">
+                    <div class="item">
+                        <label for="pengalaman">Tahun Pengalaman Kerja<span>*</span></label>
+                        <input id="pengalaman" type="number" name="pengalaman" value="<?= $old['pengalaman']; ?>" required />
+                        <span class="text-danger">
+                            <?php
+                            if (isset($_SESSION['err_pengalaman'])) {
+                                echo $_SESSION['err_pengalaman'];
+                                unset($_SESSION['err_pengalaman']);
+                            }
+                            ?>
+                        </span>
+                    </div>
+
+                    <div class="item">
+                        <label for="pengalaman_kebun">Tahun Pengalaman Kerja di Perkebunan<span>*</span></label>
+                        <input id="pengalaman_kebun" type="number" name="pengalaman_kebun" value="<?= $old['pengalaman_kebun']; ?>" required />
+                        <span class="text-danger">
+                            <?php
+                            if (isset($_SESSION['err_pengalaman_kebun'])) {
+                                echo $_SESSION['err_pengalaman_kebun'];
+                                unset($_SESSION['err_pengalaman_kebun']);
+                            }
+                            ?>
+                        </span>
+                    </div>
+
+                    <div class="item">
+                        <label for="lokasi_kalimantan">Bersedia ditempatkan di Kalimantan<span>*</span></label>
+                        <select name="lokasi_kalimantan" required>
+                            <option value=""></option>
+                            <option <?= $old['lokasi_kalimantan'] == "Yes" ? "selected" : ""; ?> value="Yes">Yes</option>
+                            <option <?= $old['lokasi_kalimantan'] == "No" ? "selected" : ""; ?> value="No">No</option>
+                        </select>
+                        <span class="text-danger">
+                            <?php
+                            if (isset($_SESSION['err_lokasi_kalimantan'])) {
+                                echo $_SESSION['err_lokasi_kalimantan'];
+                                unset($_SESSION['err_lokasi_kalimantan']);
+                            }
+                            ?>
+                        </span>
+                    </div>
+                </div>
+
+
+                <div class="colums">
+                    <div class="item">
+                        <label for="file_cv"> Upload Your CV </label> </br>
+                        <p style="font-style: italic; color: red;">*Maximum upload 3MB (pdf)</p>
+                        <input type="file" id="file" name="file" accept="application/pdf" required>
+                        <span class="text-danger">
+                            <?php
+                            if (isset($_SESSION['err_file'])) {
+                                echo $_SESSION['err_file'];
+                                unset($_SESSION['err_file']);
+                            }
+                            ?>
+                        </span>
+                    </div>
+                    <div class="item">
+                        <label for="file_cv"> Upload Your Application Letter </label> </br>
+                        <p style="font-style: italic; color: red;">Maximum upload 3MB (docx,pptx,pdf)</p>
+                        <input type="file" id="file_surat" name="file_surat" accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.slideshow, application/vnd.openxmlformats-officedocument.presentationml.presentation" required>
+                        <span class="text-danger">
+                            <?php
+                            if (isset($_SESSION['err_file_surat'])) {
+                                echo $_SESSION['err_file_surat'];
+                                unset($_SESSION['err_file_surat']);
+                            }
+                            ?>
+                        </span>
+                    </div>
+                </div>
+
+                <h2 class="mt-5">Applicants Agreements</h2>
+                <input type="checkbox" name="checkbox1">
+                <label>
+                    <li>I certify that information contained in this application is true and complete
+                    </li>
+                    <li>I understand that false information may be grounds for not hiring me and for immediate
+                    </li>
+                    <li>terimnation of employment at any point in the future if I am hired
+                    </li>
+                    <li>I authorize the veifircation of all of information listed above
+                    </li>
+
+                </label>
+                <div class="btn-block">
+                    <button type="submit" name="submit">Submit</button>
+                    </br>
+                    <span class="text-danger">
+                        <?php
+                        if (isset($_SESSION['err'])) {
+                            echo $_SESSION['err'];
+                            unset($_SESSION['err']);
+                        }
+                        ?>
+                    </span>
+                </div>
+            </form>
+        </div>
     </section>
 
-
-    <div class="u-hide--desktop" id="js-filter-mobile">
-        <div class="c-menu-downtop" id="switch-filter-mobile">
-            <div class="c-menu-downtop__content">
-                <div class="c-menu-downtop__content__header u-text-align__center">
-                    <span class="u-icon--swipe"></span>
-                </div>
-                <div class="c-menu-downtop__content__body c-menu-downtop__content__body--with-footer">
-
-
-
-                    <div class="c-list-downtop">
-                        <p class="c-list-downtop__header">Kota</p>
-                        <ul class="c-list-downtop__group" id="list-item-city-mobile">
-                            <li class="list-item js-item-country" id="list-item-country-all" data-target="country" data-value="all" data-title="Semua Kota">
-                                <a href="javascript:;">Semua Kota</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="c-menu-downtop__content__footer">
-                    <div class="row">
-                        <div class="col">
-                            <button class="btn-default btn-gocareer btn-default--theme-gocareer js-close-menu" type="button" data-target="switch-filter-mobile">Cancel</button>
-                        </div>
-
-                        <div class="col pl-1">
-                            <button class="btn-default btn-gocareer btn-default--theme-gocareer js-ok-filter" type="button" data-target="switch-filter">OK</button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
     </div>
 
 
 
-    <section class="c-section px-2">
-        <div class="container">
-            <div class="row">
 
 
 
-                <div class="col-12 pl-0 pl-md-2">
 
 
-                    <div class="row align-items-center c-toolbar c-toolbar--menu c-toolbar--theme-gocareer mb-3 u-hide--desktop js-menu-downtop" data-target="city">
-                        <div class="col-3">
-                            <p><i class="c-toolbar__icon icon-location"></i></p>
-                        </div>
-                        <div class="col-6">
-                            <p class="">
-                                Pilih Kota
-                            </p>
-                        </div>
-                        <div class="col-3">
-                            <p><i class="c-toolbar__icon icon-caret-down"></i></p>
-                        </div>
-                    </div>
-
-                    <div class="row mb-0 mb-md-4">
-                        <div class="col-12 col-md-5 align-self-center offset-md-3">
-                            <h2 class="mb-2 mb-md-0 u-title--jobs">
-                                Job list
-                            </h2>
-                        </div>
-                    </div>
-
-                    <hr class="c-hr mt-2 mb-2 mt-md-3 mb-md-3 offset-md-3">
-
-                    <div class="row">
-
-                        <div class="col-12 col-md-3 u-hide--mobile pr-0 pr-md-2">
-                            <div class="u-position u-position--sticky-top u-position--sticky-top--ter-top">
-
-                                <div class="c-filter--card">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="c-filter--card__selectbox">
-                                                <span class="u-font-weight__bold c-filter--card__selectbox__label">Kota</span>
-                                                <div class="c-dropdown">
-                                                    <p class="u-fg--gocareer c-filter--card__selectbox__info js-dropdown js-menu-downtop" data-target="city">
-                                                        <?= ($lokasi == "") ? "Semua Lokasi" : $lokasi; ?>
-                                                    </p>
-                                                    <?php
-                                                    $unique_lokasis = $c_list_jobs->get_unique_lokasi();
-                                                    ?>
-                                                    <div class="c-dropdown__list">
-                                                        <ul class="u-hide--mobile">
-                                                            <li class="list-item">
-                                                                <a href="<?= APP_URL; ?>/job-list.php?lokasi=">
-                                                                    Semua Lokasi
-                                                                </a>
-                                                            </li>
-                                                            <?php
-                                                            foreach ($unique_lokasis as $unique_lokasi) {
-                                                            ?>
-                                                                <li class="list-item">
-                                                                    <a href="<?= APP_URL; ?>/job-list.php?lokasi=<?= $unique_lokasi['lokasi']; ?>">
-                                                                        <?= $unique_lokasi['lokasi']; ?>
-                                                                    </a>
-                                                                </li>
-                                                            <?php
-                                                            }
-                                                            ?>
-
-                                                        </ul>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="col-12 col-md-9 c-job-list">
-
-                            <?php
-                            if (count($list_jobs['data']) == 0) {
-                            ?>
-                                <div class="row">
-                                    <h1>Job List Empty. Come back again later</h1>
-                                </div>
-                            <?php } else { ?>
-                                <?php
-                                $no = 1;
-                                foreach ($list_jobs['data'] as $list_job) {
-                                ?>
-                                    <div class="row">
-                                        <div class="col-12 c-job-list__item">
-                                            <div class="c-card">
-                                                <div class="c-card__body p-2">
-                                                    <div class="row">
-                                                        <div class="col-1 u-text-align__center--desktop">
-                                                            <p class="u-font-weight__bold u-fg--goride">
-                                                                <?= $no++; ?>
-                                                            </p>
-                                                        </div>
-
-                                                        <div class="col-11">
-                                                            <div class="row">
-                                                                <div class="col-12 col-md-6 ">
-                                                                    <p class="u-font-weight__bold mb-1 mb-md-0">
-                                                                        <a href="<?= APP_URL; ?>/job-detail.php?id=<?= $list_job['id']; ?>">
-                                                                            <?= $list_job['nama_jabatan']; ?>
-                                                                        </a>
-                                                                    </p>
-                                                                </div>
-                                                                <div class="col-12 col-md-6 align-self-center">
-                                                                    <div class="row">
-                                                                        <div class="col-6 col-md-6 u-text-align__center--desktop">
-                                                                            <p class="u-font-10--mb u-font-weight__bold u-fg--goride">Kota</p>
-                                                                            <p><?= $list_job['lokasi']; ?></p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                <?php } ?>
-                            <?php } ?>
-                        </div>
-                    </div>
 
 
-                    <?php
-                    if ($list_jobs['total_halaman'] > 1) {
-                    ?>
-                        <div class="row justify-content-center mb-1 mb-md-0">
-                            <div class="c-pagination">
 
-                                <div class="col-auto">
 
-                                    <?php
-                                    if ($list_jobs['halaman'] <= 1) {
-                                    ?>
-                                        <a href="javascript:;" class="u-hide--mobile">
-                                            <button class="prev-end disable"></button>
-                                        </a>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <a href="<?= APP_URL . "/job-list.php" . $param_search . "&halaman=1"; ?>" class="u-hide--mobile">
-                                            <button class="prev-end"></button>
-                                        </a>
-                                    <?php
-                                    }
-                                    ?>
 
-                                    <?php
-                                    if ($list_jobs['halaman'] <= 1) {
-                                    ?>
-                                        <a href="javascript:;" class="u-hide--mobile">
-                                            <button class="prev disable"></button>
-                                        </a>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <a href="<?= APP_URL . "/job-list.php" . $param_search . "&halaman=" . $list_jobs['prev']; ?>" class="u-hide--mobile">
-                                            <button class="prev"></button>
-                                        </a>
-                                    <?php
-                                    }
-                                    ?>
 
-                                </div>
-
-                                <div class="col">
-                                    <?php
-                                    for ($x = 1; $x <= $list_jobs['total_halaman']; $x++) {
-                                    ?>
-                                        <a href="<?= APP_URL . "/job-list.php" . $param_search . "&halaman=" . $x; ?>">
-                                            <button class="<?= ($x == $list_jobs['halaman']) ? "active" : null; ?>">
-                                                <?= $x; ?>
-                                            </button>
-                                        </a>
-                                    <?php
-                                    }
-                                    ?>
-                                </div>
-
-                                <div class="col-auto">
-
-                                    <?php
-                                    if ($list_jobs['halaman'] >= $list_jobs['total_halaman']) {
-                                    ?>
-                                        <a href="javascript:;">
-                                            <button class="next disable"></button>
-                                        </a>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <a href="<?= APP_URL . "/job-list.php" . $param_search . "&halaman=" . $list_jobs['next']; ?>" class="u-hide--mobile">
-                                            <button class="next"></button>
-                                        </a>
-                                    <?php
-                                    }
-                                    ?>
-
-                                    <?php
-                                    if ($list_jobs['halaman'] >= $list_jobs['total_halaman']) {
-                                    ?>
-                                        <a href="javascript:;" class="u-hide--mobile">
-                                            <button class="next-end disable"></button>
-                                        </a>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <a href="<?= APP_URL . "/job-list.php" . $param_search . "&halaman=" . $list_jobs['total_halaman']; ?>" class="u-hide--mobile">
-                                            <button class="next-end"></button>
-                                        </a>
-                                    <?php
-                                    }
-                                    ?>
-
-                                </div>
-
-                            </div>
-                        </div>
-                    <?php
-                    }
-                    ?>
-
-                </div>
-            </div>
-
-            <form action="#" method="GET" id="js-form-filter">
-                <input type="hidden" name="country" id="val-country" value="">
-                <input type="hidden" name="city" id="val-city" value="">
-
-            </form>
-        </div>
-    </section>
 
 
 
@@ -783,7 +1083,7 @@ if ($halaman) {
 
                 <div class="col-12 col-lg">
                     <div class="row">
-                        <a href="https://career.fap-agri.com/frontpage/job-list.php" class="col-12">Job List</a>
+                        <a href="/job/" class="col-12">Job List</a>
                     </div>
                 </div>
                 <div class="col-12 col-lg">
@@ -1407,6 +1707,16 @@ if ($halaman) {
             }
         };
         var titleAllCities = "Semua Kota";
+    </script>
+
+    <script>
+        function cekemail(email) {
+            if (email.indexOf("@") != -1 && email.indexOf(".") != -1) {
+                alert("Format email Anda Benar");
+            } else {
+                alert("Format email Anda salah!!");
+            }
+        }
     </script>
 
 
