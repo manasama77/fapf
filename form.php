@@ -296,27 +296,8 @@ if (isset($_POST['submit'])) {
         return header('location: job-apply.php');
     }
 
+    $conn->close();
+
     echo $sql;
     exit;
 }
-
-
-
-// send query to the database to add values and confirm if successful
-// $rs = mysqli_query($con, $sql);
-// if ($rs) {
-//     echo "Selamat Data Anda Sudah Terkirim, Akan Kami Proses Segera...!";
-// } else {
-//     echo "Data Anda Kurang, Silahkan Lengkapi Dahulu...!";
-// }
-
-// ambil data file
-// $file_cv = $_FILES['berkas']['file_cv'];
-// $file_surat = $_FILES['berkas']['file_surat'];
-
-// // tentukan lokasi file akan dipindahkan
-// $dirUpload = "frontpage/terupload/";
-
-
-// // close connection
-// mysqli_close($con);

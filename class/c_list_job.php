@@ -54,9 +54,6 @@ class CListJob
             LIMIT $halaman_awal, $batas
         ";
 
-        // echo '<pre>' . print_r($sql, 1) . '</pre>';
-        // exit;
-
         $query = $this->conn->query($sql);
 
         $return = [
