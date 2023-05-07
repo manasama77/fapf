@@ -1,28 +1,9 @@
-<?php
-
-require_once('constants.php');
-require_once('class/c_list_job.php');
-$id = ($_GET['id']) ?? null;
-
-if ($id == "") {
-    return header("location:" . APP_URL . "/job-list.php");
-}
-
-$c_list_jobs = new CListJob();
-
-$job = $c_list_jobs->show($id);
-
-// echo '<pre>' . print_r($list_jobs, 1) . '</pre>';
-// exit;
-
-?>
-
 <!DOCTYPE html>
 <html class="no-js">
 
 <head>
 
-    <title>Job Detail - Career at FAP AGRI - FAP AGRI Career</title>
+    <title>Job Apply Success - Career at FAP AGRI - FAP AGRI Career</title>
     <meta name="description" content="Give impact while doing what you&#39;re capable of. View open job at FAP AGRI in Indonesia">
     <meta itemprop="name" content="Career at FAP AGRI - FAP AGRI Career">
     <meta itemprop="description" content="Give impact while doing what you&#39;re capable of. View open job at FAP AGRI in Indonesia.">
@@ -32,9 +13,6 @@ $job = $c_list_jobs->show($id);
     <meta property="og:description" content="Give impact while doing what you&#39;re capable of. View open job at FAP AGRI in Indonesia.">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
-    <!-- Bootstrap CSS -->
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous"> -->
 
     <style>
         @font-face {
@@ -384,7 +362,6 @@ $job = $c_list_jobs->show($id);
 
         /*# sourceMappingURL=maps/fonts.css.map */
     </style>
-
     <link rel="stylesheet" href="css/main.css">
     <link rel="shortcut icon" href="https://career.fap-agri.com/public/favicon.ico" type="image/x-icon">
 
@@ -410,7 +387,7 @@ $job = $c_list_jobs->show($id);
 
 
 
-    <!-- <section class="c-section c-banner-slider--hero mb-0">
+    <section class="c-section c-banner-slider--hero mb-0">
         <div class="row js-slider-banner" data-slider-dot="true">
 
             <div class="col c-banner-slider--hero__wrapper">
@@ -421,76 +398,17 @@ $job = $c_list_jobs->show($id);
                 <div class="container">
                     <div class="row c-banner-slider--hero__content">
                         <div class="col-12 col-md-5">
-                            <h1 class="mb-2">Kesempatan Berkarir Bersama FAP Agri</h1>
-                            <p>FAP Agri memiliki komitmen untuk menghasilkan produk berkualitas, ramah lingkungan dengan berpegang teguh pada tata kelola yang baik untuk mencapai kinerja unggul, mewujudkan kesejahteraan karyawan, serta menjadikan masyarakat mitra setara yang saling menguntungkan.</p>
+                            <h1 class="mb-2">Job Apply Success</h1>
+                            <p>CV & Juga Application Letter kamu akan segera diproses.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
         </div>
-    </section> -->
-
-    <div class="container my-5">
-        <div class="row">
-            <div class="col-sm-8 pr-3">
-                <h3 class="mt-2">
-                    <?= $job['kode_jabatan']; ?> - <?= $job['nama_jabatan']; ?>
-                </h3>
-                <hr />
-
-                <h4 class="mt-2">Job Description</h4>
-                <p>
-                    <?= $job['informasi_pekerjaan']; ?>
-                </p>
-
-                <h4 class="mt-2">Key Responsibilities</h4>
-                <p>
-                    <?= $job['tugas']; ?>
-                </p>
-
-                <div class="d-flex flex-column justify-content-center align-items-center mt-5">
-                    <a href="<?= APP_URL; ?>/job-apply.php?id=<?= $job['id']; ?>">
-                        <button class="btn-gocareer btn-default btn-default--theme-gocareer">
-                            Apply for Job
-                        </button>
-                    </a>
-                    <a href="<?= APP_URL; ?>/job-list.php" class="my-2">
-                        <button class="btn-gocareer btn-default btn-outline--theme-gocareer">
-                            Back to List
-                        </button>
-                    </a>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="c-card">
-                    <div class="c-card__body p-2">
-                        <h3 class="mb-2">Job Overview</h3>
-                        <p class="mb-2">Posted date:<br /><?= $job['tgl_posted']; ?></p>
-                        <p class="mb-2">Expiration date:<br /><?= $job['tgl_dibutuhkan']; ?></p>
-                        <p class="mb-2">Departemen:<br /><?= $job['nama_departemen']; ?></p>
-                        <p class="mb-2">Location:<br /><?= $job['lokasi']; ?></p>
-                        <p class="mb-2">Employee Status:<br /><?= $job['status_karyawan']; ?></p>
-                        <p class="mb-2">Experience:<br /><?= $job['pengalaman']; ?> years</p>
-                        <p class="mb-2">Age Requirement:<br /><?= $job['usia_min']; ?> ~ <?= $job['usia_max']; ?> years</p>
-                        <p class="mb-2">Gender:<br /><?= $job['jk']; ?></p>
-                        <p class="mb-2">Education:<br /><?= $job['pendidikan']; ?></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
+    </section>
 
     <?php include('components/footer.php'); ?>
-
-
-    <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script> -->
 
 
 

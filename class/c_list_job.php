@@ -5,24 +5,19 @@ class CListJob
 
     public function __construct()
     {
-        require_once('./koneksi.php');
+        require('./koneksi.php');
         $this->conn = $conn;
     }
 
     public function get($lokasi, $keyword, $halaman = 1)
     {
-        $batas = 1;
+        $batas = 2;
         $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
 
         $prev = $halaman - 1;
         $next = $halaman + 1;
 
         $where_additional = 't_job_vacant.`status` = 1';
-
-        $sql_all_data   = "SELECT * FROM t_job_vacant WHERE $where_additional";
-        $query_all_data = $this->conn->query($sql_all_data);
-        $total_data     = $query_all_data->num_rows;
-        $total_halaman  = ceil($total_data / $batas);
 
         if ($lokasi) {
             $where_additional .= "
@@ -40,6 +35,11 @@ class CListJob
             )
             ";
         }
+
+        $sql_all_data   = "SELECT * FROM t_job_vacant WHERE $where_additional";
+        $query_all_data = $this->conn->query($sql_all_data);
+        $total_data     = $query_all_data->num_rows;
+        $total_halaman  = ceil($total_data / $batas);
 
         $sql = "
             SELECT 
@@ -105,7 +105,7 @@ class CListJob
         $sql = "
         SELECT 
             t_job_vacant.id,
-            t_job_vacant.tgl_input,
+            t_job_vacant.tgl_input as tgl_posted,
             t_job_vacant.tgl_dibutuhkan,
             t_job_vacant.status_karyawan,
             t_job_vacant.pengalaman,

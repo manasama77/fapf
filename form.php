@@ -1,8 +1,21 @@
 <?php
 session_start();
-include("koneksi.php");
-// getting all values from the HTML form
-$all_input = $_POST;
+require("koneksi.php");
+require_once('constants.php');
+require_once('class/c_list_job.php');
+
+if (!isset($_GET['id'])) {
+    session_destroy();
+    header("location:job-list.php");
+}
+
+$id = $_GET['id'];
+
+$c_list_jobs = new CListJob();
+$job         = $c_list_jobs->show($id);
+
+$posisi     = $job['kode_jabatan'];
+$penempatan = $job['lokasi'];
 
 //validasi
 $error = 0;
@@ -161,7 +174,7 @@ if (isset($_POST['submit'])) {
     $ipk                = $_POST['ipk'];
     $max_ipk            = $_POST['max_ipk'];
     $status_universitas = $_POST['status_universitas'];
-    $status             = 1;
+    $status             = 0;
     $lokasi_univ        = $_POST['lokasi_univ'];
     $pengalaman         = $_POST['pengalaman'];
     $pengalaman_kebun   = $_POST['pengalaman_kebun'];
@@ -244,7 +257,7 @@ if (isset($_POST['submit'])) {
         null,
         null,
         '$pendidikan',
-        '$universitas',
+        '',
         '$status_universitas',
         '$lokasi_univ',
         '$jurusan',
@@ -267,7 +280,7 @@ if (isset($_POST['submit'])) {
         null,
         null,
         null,
-        '$pendaftaran',
+        null,
         null,
         null,
         null,
@@ -298,6 +311,8 @@ if (isset($_POST['submit'])) {
 
     $conn->close();
 
-    echo $sql;
-    exit;
+    return header('location:job-apply-finish.php');
+
+    // echo $sql;
+    // exit;
 }
