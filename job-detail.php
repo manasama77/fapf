@@ -1,7 +1,10 @@
 <?php
+session_start();
+session_destroy();
 
 require_once('constants.php');
 require_once('class/c_list_job.php');
+
 $id = ($_GET['id']) ?? null;
 
 if ($id == "") {
@@ -410,7 +413,7 @@ $job = $c_list_jobs->show($id);
 
 
 
-    <!-- <section class="c-section c-banner-slider--hero mb-0">
+    <section class="c-section c-banner-slider--hero mb-0">
         <div class="row js-slider-banner" data-slider-dot="true">
 
             <div class="col c-banner-slider--hero__wrapper">
@@ -429,7 +432,7 @@ $job = $c_list_jobs->show($id);
             </div>
 
         </div>
-    </section> -->
+    </section>
 
     <div class="container my-5">
         <div class="row">
@@ -1030,7 +1033,7 @@ $job = $c_list_jobs->show($id);
     <script src="js/DyUVfnQzjmf5.js"></script>
     <script src="js/EfyJtMJ15CLx.js"></script>
     <script src="js/hwtS4kIXeeP4.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 
 </html>

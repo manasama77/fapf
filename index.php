@@ -1,5 +1,11 @@
 <?php
+session_start();
+session_destroy();
+
 require_once('constants.php');
+require_once('class/c_list_job.php');
+$c_list_jobs = new CListJob();
+$unique_lokasis = $c_list_jobs->get_unique_lokasi();
 ?>
 
 <!DOCTYPE html>
@@ -433,7 +439,7 @@ require_once('constants.php');
   </section>
 
   <section class="c-section c-section--small--mb u-position u-position--sticky-top u-position--sticky-top--sec-top">
-    <form action="/job/search/" method="GET" id="js-form-search">
+    <form action="<?= APP_URL; ?>/job-list.php" method="GET" id="js-form-search">
       <div class="c-card--full-width">
         <div class="container">
           <div class="row c-search justify-content-md-center">
@@ -446,9 +452,24 @@ require_once('constants.php');
                     </div>
                     <div class="c-dropdown__list">
                       <ul id="list-item-city">
-                        <li class="list-item js-item-city" id="list-item-city-all" data-target="city" data-value="all" data-title="Semua Kota">
-                          <a href="javascript:;">Semua Kota</a>
+
+                        <li class="list-item">
+                          <a href="<?= APP_URL; ?>/job-list.php?lokasi=">
+                            Semua Lokasi
+                          </a>
                         </li>
+                        <?php
+                        foreach ($unique_lokasis as $unique_lokasi) {
+                        ?>
+                          <li class="list-item">
+                            <a href="<?= APP_URL; ?>/job-list.php?lokasi=<?= $unique_lokasi['lokasi']; ?>">
+                              <?= $unique_lokasi['lokasi']; ?>
+                            </a>
+                          </li>
+                        <?php
+                        }
+                        ?>
+
                       </ul>
                     </div>
                   </div>
@@ -458,9 +479,7 @@ require_once('constants.php');
 
             <div class="col-12 col-md-7 align-self-center d-flex">
               <div class="c-search__group ml-0 ml-md-2 mr-2 mr-md-0">
-                <input type="text" name="q" class="field-search" placeholder="Search Position..." value />
-                <input type="hidden" name="country" id="val-country" value />
-                <input type="hidden" name="city" id="val-city" value />
+                <input type="text" name="keyword" class="field-search" placeholder="Search Position..." value />
                 <button class="btn-search" type="submit">
                   <i class="icon-search"></i>
                   <span class="u-hide--mobile">Cari </span>
@@ -1222,6 +1241,8 @@ require_once('constants.php');
   <script src="js/DyUVfnQzjmf5.js"></script>
   <script src="js/EfyJtMJ15CLx.js"></script>
   <script src="js/hwtS4kIXeeP4.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 
 </html>

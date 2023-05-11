@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $hostName = "localhost";
 $userName = "root";
 $password = "";
@@ -8,3 +10,7 @@ $conn = new mysqli($hostName, $userName, $password, $databaseName);
 if ($conn->connect_error) {
   die("Koneksi ke database gagal : " . $conn->connect_error);
 }
+
+
+$pdo = new PDO("mysql:host=$hostName;dbname=$databaseName", $userName, $password);
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

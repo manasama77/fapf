@@ -20,13 +20,12 @@
                 <a href="https://fap-agri.com/">Website</a>
             </div>
 
-            <!-- <div class="col-auto">
-        <a href="https://career.fap-agri.com/frontpage/form-pelamar.php">Formulir</a>
-    </div> -->
+            <div class="col-auto">
+                <a href="login.php">
+                    <i class="fa-solid fa-right-to-bracket fa-fw"></i> Login
+                </a>
+            </div>
 
-            <!--<div class="col-auto">
-                        <a href="https://career.fap-agri.com/">Login</a>
-                    </div> -->
         </div>
     </div>
 </div>

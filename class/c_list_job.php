@@ -29,9 +29,7 @@ class CListJob
             $where_additional .= "
             AND
             (
-                t_job_vacant.`skill` LIKE '$keyword%'
-                OR t_job_vacant.`lokasi` LIKE '$keyword%'
-                OR t_jabatan.`nama_jabatan` LIKE '$keyword%'
+                t_jabatan.`nama_jabatan` LIKE '$keyword%'
             )
             ";
         }

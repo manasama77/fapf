@@ -1,4 +1,6 @@
 <?php
+session_start();
+session_destroy();
 
 require_once('constants.php');
 require_once('class/c_list_job.php');
@@ -461,6 +463,7 @@ if ($halaman) {
 
                         <div class="col-12 col-md-7 align-self-center d-flex">
                             <div class="c-search__group  ml-0 ml-md-2 mr-2 mr-md-0 ">
+                                <input type="hidden" name="lokasi" value="<?= ($lokasi == "") ? "" : $lokasi; ?>">
                                 <input type="text" name="keyword" class="field-search" placeholder="Search Position..." value="<?= $keyword; ?>">
                                 <button class="btn-search" type="submit">
                                     <i class="icon-search"></i>
@@ -490,8 +493,6 @@ if ($halaman) {
                     <span class="u-icon--swipe"></span>
                 </div>
                 <div class="c-menu-downtop__content__body c-menu-downtop__content__body--with-footer">
-
-
 
                     <div class="c-list-downtop">
                         <p class="c-list-downtop__header">Kota</p>
@@ -572,8 +573,9 @@ if ($halaman) {
                                                     ?>
                                                     <div class="c-dropdown__list">
                                                         <ul class="u-hide--mobile">
+
                                                             <li class="list-item">
-                                                                <a href="<?= APP_URL; ?>/job-list.php?lokasi=">
+                                                                <a href="<?= APP_URL; ?>/job-list.php?lokasi=&keyword=<?= $keyword; ?>">
                                                                     Semua Lokasi
                                                                 </a>
                                                             </li>
@@ -581,7 +583,7 @@ if ($halaman) {
                                                             foreach ($unique_lokasis as $unique_lokasi) {
                                                             ?>
                                                                 <li class="list-item">
-                                                                    <a href="<?= APP_URL; ?>/job-list.php?lokasi=<?= $unique_lokasi['lokasi']; ?>">
+                                                                    <a href="<?= APP_URL; ?>/job-list.php?lokasi=<?= $unique_lokasi['lokasi']; ?>&keyword=<?= $keyword; ?>">
                                                                         <?= $unique_lokasi['lokasi']; ?>
                                                                     </a>
                                                                 </li>
@@ -1312,7 +1314,7 @@ if ($halaman) {
     <script src="js/DyUVfnQzjmf5.js"></script>
     <script src="js/EfyJtMJ15CLx.js"></script>
     <script src="js/hwtS4kIXeeP4.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 
 </html>

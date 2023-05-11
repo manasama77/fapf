@@ -4,7 +4,7 @@ require("koneksi.php");
 require_once('constants.php');
 require_once('class/c_list_job.php');
 
-if (!isset($_GET['id'])) {
+if (!$_GET['id']) {
     session_destroy();
     header("location:job-list.php");
 }
@@ -123,7 +123,7 @@ if (!file_exists($_FILES['file_surat']['tmp_name']) || !is_uploaded_file($_FILES
 
 if ($error == 1) {
     $_SESSION['old'] = $_POST;
-    return header('location: job-apply.php');
+    return header('location: job-apply.php?id=' . $id);
 }
 
 if (isset($_POST['submit'])) {
@@ -140,20 +140,22 @@ if (isset($_POST['submit'])) {
         $msg                  = "Upload CV Failed, please try reupload again...";
         $_SESSION['err_file'] = $msg;
         $_SESSION['old']      = $_POST;
-        return header('location: job-apply.php');
+        return header('location: job-apply.php' . $id);
     } elseif (!move_uploaded_file($_FILES["file_surat"]["tmp_name"], $target_file_surat)) {
         $msg                        = "Upload Application Letter Failed, please try reupload again...";
         $_SESSION['err_file_surat'] = $msg;
         $_SESSION['old']            = $_POST;
-        return header('location: job-apply.php');
+        return header('location: job-apply.php' . $id);
     } elseif (file_exists($target_file)) {
         $msg                  = "File CV already exist, please rename the file or try another file...";
         $_SESSION['err_file'] = $msg;
         $_SESSION['old']      = $_POST;
+        return header('location: job-apply.php' . $id);
     } elseif (file_exists($target_file_surat)) {
         $msg                        = "File Application Letter already exist, please rename the file or try another file...";
         $_SESSION['err_file_surat'] = $msg;
         $_SESSION['old']            = $_POST;
+        return header('location: job-apply.php' . $id);
     }
 
     $tgl_input          = date("Y-m-d H:i:s");
@@ -306,11 +308,11 @@ if (isset($_POST['submit'])) {
         $msg             = "Terjadi kesalahan dengan server silahkan coba kembali...";
         $_SESSION['err'] = $msg;
         $_SESSION['old'] = $_POST;
-        return header('location: job-apply.php');
+        return header('location: job-apply.php' . $id);
     }
 
     $conn->close();
-
+    session_destroy();
     return header('location:job-apply-finish.php');
 
     // echo $sql;

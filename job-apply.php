@@ -4,8 +4,8 @@ session_start();
 require_once('constants.php');
 require_once('class/c_list_job.php');
 
-if (!isset($_GET['id'])) {
-    unset($_SESSION['old']);
+if (!$_GET['id']) {
+    session_destroy();
     header("location:job-list.php");
 }
 
@@ -738,7 +738,7 @@ if (isset($_SESSION['old'])) {
                 <div class="colums">
                     <div class="item">
                         <label for="fname"> First Name<span>*</span></label>
-                        <input id="fname" type="varchar" name="fname" value="<?= $old['fname']; ?>" />
+                        <input id="fname" type="varchar" name="fname" value="<?= $old['fname']; ?>" required />
                         <span class="text-danger">
                             <?php
                             if (isset($_SESSION['err_fname'])) {
@@ -1641,7 +1641,7 @@ if (isset($_SESSION['old'])) {
     <script src="js/DyUVfnQzjmf5.js"></script>
     <script src="js/EfyJtMJ15CLx.js"></script>
     <script src="js/hwtS4kIXeeP4.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 
 </html>
