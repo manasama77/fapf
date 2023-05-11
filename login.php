@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$_SESSION['token'] = uniqid();
+$_SESSION['token'] = md5(uniqid(mt_rand(), true));
 ?>
 <!doctype html>
 <html lang="id">
@@ -54,7 +54,7 @@ $_SESSION['token'] = uniqid();
                         <?php } ?>
 
                         <form action="auth.php" method="post">
-                            <input type="hidden" id="token" name="token" value="<?= $_SESSION['token']; ?>" />
+                            <input type="hidden" id="token" name="token" value="<?= $_SESSION['token'] ?? ''; ?>" />
                             <div class="form-group first">
                                 <label for="email">Email</label>
                                 <input type="text" class="form-control" id="email" name="email" maxlength="30" required />
