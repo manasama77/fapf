@@ -43,6 +43,7 @@ try {
     }
 
     unset($_SESSION['token']);
+
     $_SESSION['email']        = $row->email;
     $_SESSION['nama_lengkap'] = $row->nama_lengkap;
 
