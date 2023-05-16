@@ -23,7 +23,7 @@ $_SESSION['token'] = md5(uniqid(mt_rand(), true));
     <!-- Style -->
     <link rel="stylesheet" href="login_assets/css/style.css">
 
-    <title>Login Pelamar</title>
+    <title>Login Pelamar &mdash; FAP AGRI Career</title>
 </head>
 
 <body>
@@ -61,7 +61,7 @@ $_SESSION['token'] = md5(uniqid(mt_rand(), true));
 
                             </div>
                             <div class="form-group last mb-3">
-                                <label for="password">Password</label>
+                                <label for="password">Activation Code</label>
                                 <input type="password" class="form-control" id="password" name="password" maxlength="100" required>
                             </div>
 
