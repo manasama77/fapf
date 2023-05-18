@@ -132,10 +132,10 @@ if (isset($_POST['submit'])) {
         mkdir($target_dir, 0777, true);
     }
 
-    $cv_filename = basename(time() . '-CV-' . $_POST['fname'] . ' ' . $_POST['lname'] . '.' . pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION));
+    $cv_filename = $target_dir . basename(rand() . '-CV-' . $_POST['fname'] . ' ' . $_POST['lname'] . '.' . pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION));
     $cv_file = $target_dir . $cv_filename;
 
-    $surat_lamaran_filename        = basename(time() . '-SURAT LAMARAN-' . $_POST['fname'] . ' ' . $_POST['lname'] . '.' . pathinfo($_FILES["file_surat"]["name"], PATHINFO_EXTENSION));
+    $surat_lamaran_filename = $target_dir . basename(rand() . '-SURAT LAMARAN-' . $_POST['fname'] . ' ' . $_POST['lname'] . '.' . pathinfo($_FILES["file_surat"]["name"], PATHINFO_EXTENSION));
     $surat_lamaran_file = $target_dir . $surat_lamaran_filename;
 
     if (file_exists($cv_file)) {
