@@ -61,7 +61,7 @@ $_SESSION['token'] = md5(uniqid(mt_rand(), true));
 
                             </div>
                             <div class="form-group last mb-3">
-                                <label for="password">Activation Code</label>
+                                <label for="password">Login Code</label>
                                 <input type="password" class="form-control" id="password" name="password" maxlength="100" required>
                             </div>
 
