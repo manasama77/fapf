@@ -19,8 +19,9 @@ if (!$token || $token !== $_SESSION['token']) {
 }
 
 $sql = sprintf(
-    "SELECT * FROM t_pelamar WHERE t_pelamar.email = '%s' LIMIT 1",
+    "SELECT * FROM t_pelamar WHERE t_pelamar.email = '%s' AND t_pelamar.login_code = '%s' LIMIT 1",
     $email,
+    $password
 );
 
 try {
@@ -49,10 +50,10 @@ try {
         throw new ErrorException($msg, 500);
     }
 
-    if ($row->login_code != $password) {
-        $msg = "Email atau Activation Code salah, silahkan coba kembali.";
-        throw new ErrorException($msg, 500);
-    }
+    // if ($row->login_code != $password) {
+    //     $msg = "Email atau Activation Code salah, silahkan coba kembali.";
+    //     throw new ErrorException($msg, 500);
+    // }
 
     unset($_SESSION['token']);
 
