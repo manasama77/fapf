@@ -196,7 +196,7 @@ if ($error == 1) {
 }
 
 
-$target_dir  = '../upload/pelamar/' . date('Y-m-d') . '-' . $_SESSION['nama_lengkap'] . "/";
+$target_dir  = '../upload/pelamar/' . $_SESSION['nama_lengkap'] . "/";
 
 if (!is_dir($target_dir)) {
     mkdir($target_dir, 0777, true);
