@@ -49,7 +49,7 @@ try {
         throw new ErrorException($msg, 500);
     }
 
-    if ($row->activation_code != $password) {
+    if ($row->login_code != $password) {
         $msg = "Email atau Activation Code salah, silahkan coba kembali.";
         throw new ErrorException($msg, 500);
     }
