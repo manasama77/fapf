@@ -75,8 +75,8 @@ $_SESSION['token'] = md5(uniqid(mt_rand(), true));
                             <button type="submit" class="btn btn-block btn-warning">
                                 <i class="fa-solid fa-right-to-bracket fa-fw"></i> Log In
                             </button>
-                            <a href="index.php" class="btn-block" style="text-decoration: none;">
-                                <button type=" button" class="btn btn-block btn-secondary text-white">
+                            <a href="<?= APP_URL; ?>" class="btn-block" style="text-decoration: none;">
+                                <button type="button" class="btn btn-block btn-secondary text-white">
                                     <i class="fa-solid fa-home fa-fw"></i> Kembali ke beranda
                                 </button>
                             </a>
