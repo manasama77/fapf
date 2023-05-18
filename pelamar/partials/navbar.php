@@ -38,9 +38,6 @@
                     </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
-                    <a class="dropdown-item" href="<?= APP_URL; ?>/profile.php">
-                        <i class="me-50" data-feather="user"></i> Profile</a>
-                    <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="<?= APP_URL; ?>/pelamar/logout.php">
                         <i class="me-50" data-feather="power"></i> Logout
                     </a>
