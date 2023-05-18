@@ -180,7 +180,7 @@ if (isset($_POST['submit'])) {
     $ipk                = $_POST['ipk'];
     $max_ipk            = $_POST['max_ipk'];
     $status_universitas = $_POST['status_universitas'];
-    $status             = 0;
+    $status             = 1;
     $lokasi_univ        = $_POST['lokasi_univ'];
     $pengalaman         = $_POST['pengalaman'];
     $pengalaman_kebun   = $_POST['pengalaman_kebun'];
