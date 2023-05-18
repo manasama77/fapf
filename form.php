@@ -132,10 +132,10 @@ if (isset($_POST['submit'])) {
         mkdir($target_dir, 0777, true);
     }
 
-    $cv_filename = $target_dir . basename(rand() . '-CV-' . $_POST['fname'] . ' ' . $_POST['lname'] . '.' . pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION));
+    $cv_filename = $target_dir . rand() . '-CV-' . $_POST['fname'] . ' ' . $_POST['lname'] . '.' . pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
     $cv_file = $target_dir . $cv_filename;
 
-    $surat_lamaran_filename = $target_dir . basename(rand() . '-SURAT LAMARAN-' . $_POST['fname'] . ' ' . $_POST['lname'] . '.' . pathinfo($_FILES["file_surat"]["name"], PATHINFO_EXTENSION));
+    $surat_lamaran_filename = $target_dir . rand() . '-SURAT LAMARAN-' . $_POST['fname'] . ' ' . $_POST['lname'] . '.' . pathinfo($_FILES["file_surat"]["name"], PATHINFO_EXTENSION);
     $surat_lamaran_file = $target_dir . $surat_lamaran_filename;
 
     if (file_exists($cv_file)) {
@@ -154,12 +154,12 @@ if (isset($_POST['submit'])) {
         $msg                        = "File Application Letter already exist, please rename the file or try another file...";
         $_SESSION['err_file_surat'] = $msg;
         $_SESSION['old']            = $_POST;
-        return header('Location:' . APP_URL . '/job-apply.php' . $id);
+        return header('Location:' . APP_URL . '/job-apply.php?id=' . $id);
     } elseif (!move_uploaded_file($_FILES["file_surat"]["tmp_name"], $surat_lamaran_file)) {
         $msg                        = "Upload Application Letter Failed, please try reupload again...";
         $_SESSION['err_file_surat'] = $msg;
         $_SESSION['old']            = $_POST;
-        return header('Location:' . APP_URL . '/job-apply.php' . $id);
+        return header('Location:' . APP_URL . '/job-apply.php?id=' . $id);
     }
 
     $tgl_input          = date("Y-m-d H:i:s");
