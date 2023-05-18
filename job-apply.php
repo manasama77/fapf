@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+require_once('koneksi.php');
 require_once('constants.php');
 require_once('class/c_list_job.php');
 
@@ -11,7 +12,7 @@ if (!$_GET['id']) {
 
 $id = $_GET['id'];
 
-$c_list_jobs = new CListJob();
+$c_list_jobs = new CListJob($conn);
 $job         = $c_list_jobs->show($id);
 
 $posisi      = $job['kode_jabatan'];

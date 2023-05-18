@@ -94,7 +94,20 @@ if ($nr == 1) {
             </div>
         </div>
         <div class="col-sm-12 col-md-8">
-            <form action="form_kelengkapan.php" method="post" enctype="multipart/form-data">
+            <?php if (isset($_SESSION['wrong'])) { ?>
+                <div class="alert alert-danger">
+                    <?php
+                    function show_error($item, $key)
+                    {
+                        if (strpos($key, 'err') !== false) {
+                            echo $_SESSION[$key] . "<br />";
+                        }
+                    }
+                    array_walk_recursive($_SESSION, 'show_error');
+                    ?>
+                </div>
+            <?php } ?>
+            <form action="<?= APP_URL; ?>/pelamar/form_kelengkapan.php" method="post" enctype="multipart/form-data">
                 <input type="hidden" id="token" name="token" value="<?= $_SESSION['token'] ?? ''; ?>" />
                 <?php
                 $is_disabled = statusKelengkapan($row);
@@ -111,7 +124,8 @@ if ($nr == 1) {
                                         Foto
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="file" class="form-control" id="path_foto" name="path_foto" accept="image/*" required <?= $is_disabled ? "disabled" : ""; ?> />
+                                    <!-- <input type="file" class="form-control" id="path_foto" name="path_foto" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" <?= $is_disabled ? "disabled" : ""; ?> /> -->
+                                    <input type="file" class="form-control" id="path_foto" name="path_foto" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" required <?= $is_disabled ? "disabled" : ""; ?> />
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4">
@@ -120,7 +134,8 @@ if ($nr == 1) {
                                         KTP
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="file" class="form-control" id="path_ktp" name="path_ktp" accept="image/*" required <?= $is_disabled ? "disabled" : ""; ?> />
+                                    <!-- <input type="file" class="form-control" id="path_ktp" name="path_ktp" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" <?= $is_disabled ? "disabled" : ""; ?> /> -->
+                                    <input type="file" class="form-control" id="path_ktp" name="path_ktp" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" required <?= $is_disabled ? "disabled" : ""; ?> />
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4">
@@ -129,7 +144,8 @@ if ($nr == 1) {
                                         Akta Kelahiran
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="file" class="form-control" id="path_akta_kelahiran" name="path_akta_kelahiran" accept="image/*" required <?= $is_disabled ? "disabled" : ""; ?> />
+                                    <!-- <input type="file" class="form-control" id="path_akta_kelahiran" name="path_akta_kelahiran" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" <?= $is_disabled ? "disabled" : ""; ?> /> -->
+                                    <input type="file" class="form-control" id="path_akta_kelahiran" name="path_akta_kelahiran" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" required <?= $is_disabled ? "disabled" : ""; ?> />
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4">
@@ -138,7 +154,8 @@ if ($nr == 1) {
                                         Ijasah
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="file" class="form-control" id="path_ijasah" name="path_ijasah" accept="image/*" required <?= $is_disabled ? "disabled" : ""; ?> />
+                                    <!-- <input type="file" class="form-control" id="path_ijasah" name="path_ijasah" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" <?= $is_disabled ? "disabled" : ""; ?> /> -->
+                                    <input type="file" class="form-control" id="path_ijasah" name="path_ijasah" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" required <?= $is_disabled ? "disabled" : ""; ?> />
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4">
@@ -147,7 +164,8 @@ if ($nr == 1) {
                                         Transkrip Nilai
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="file" class="form-control" id="path_transkrip_nilai" name="path_transkrip_nilai" accept="image/*" required <?= $is_disabled ? "disabled" : ""; ?> />
+                                    <!-- <input type="file" class="form-control" id="path_transkrip_nilai" name="path_transkrip_nilai" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" <?= $is_disabled ? "disabled" : ""; ?> /> -->
+                                    <input type="file" class="form-control" id="path_transkrip_nilai" name="path_transkrip_nilai" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" required <?= $is_disabled ? "disabled" : ""; ?> />
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4">
@@ -156,7 +174,8 @@ if ($nr == 1) {
                                         Sertifikat Pelatihan
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="file" class="form-control" id="path_setifikat_pelatihan" name="path_setifikat_pelatihan" accept="image/*" required <?= $is_disabled ? "disabled" : ""; ?> />
+                                    <!-- <input type="file" class="form-control" id="path_setifikat_pelatihan" name="path_setifikat_pelatihan" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" <?= $is_disabled ? "disabled" : ""; ?> /> -->
+                                    <input type="file" class="form-control" id="path_setifikat_pelatihan" name="path_setifikat_pelatihan" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" required <?= $is_disabled ? "disabled" : ""; ?> />
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4">
@@ -165,7 +184,8 @@ if ($nr == 1) {
                                         Surat Pengalaman Kerja
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="file" class="form-control" id="path_surat_pengalaman_kerja" name="path_surat_pengalaman_kerja" accept="image/*" required <?= $is_disabled ? "disabled" : ""; ?> />
+                                    <!-- <input type="file" class="form-control" id="path_surat_pengalaman_kerja" name="path_surat_pengalaman_kerja" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" <?= $is_disabled ? "disabled" : ""; ?> /> -->
+                                    <input type="file" class="form-control" id="path_surat_pengalaman_kerja" name="path_surat_pengalaman_kerja" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" required <?= $is_disabled ? "disabled" : ""; ?> />
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4">
@@ -174,7 +194,8 @@ if ($nr == 1) {
                                         Slip Gaji
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="file" class="form-control" id="path_slip_gaji" name="path_slip_gaji" accept="image/*" required <?= $is_disabled ? "disabled" : ""; ?> />
+                                    <!-- <input type="file" class="form-control" id="path_slip_gaji" name="path_slip_gaji" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" <?= $is_disabled ? "disabled" : ""; ?> /> -->
+                                    <input type="file" class="form-control" id="path_slip_gaji" name="path_slip_gaji" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" required <?= $is_disabled ? "disabled" : ""; ?> />
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4">
@@ -183,7 +204,8 @@ if ($nr == 1) {
                                         NPWP
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="file" class="form-control" id="path_npwp" name="path_npwp" accept="image/*" required <?= $is_disabled ? "disabled" : ""; ?> />
+                                    <!-- <input type="file" class="form-control" id="path_npwp" name="path_npwp" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" <?= $is_disabled ? "disabled" : ""; ?> /> -->
+                                    <input type="file" class="form-control" id="path_npwp" name="path_npwp" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" required <?= $is_disabled ? "disabled" : ""; ?> />
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4">
@@ -192,7 +214,8 @@ if ($nr == 1) {
                                         BPJS Tenaga Kerja
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="file" class="form-control" id="path_bpjs_tk" name="path_bpjs_tk" accept="image/*" required <?= $is_disabled ? "disabled" : ""; ?> />
+                                    <!-- <input type="file" class="form-control" id="path_bpjs_tk" name="path_bpjs_tk" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" <?= $is_disabled ? "disabled" : ""; ?> /> -->
+                                    <input type="file" class="form-control" id="path_bpjs_tk" name="path_bpjs_tk" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" required <?= $is_disabled ? "disabled" : ""; ?> />
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4">
@@ -201,7 +224,8 @@ if ($nr == 1) {
                                         BPJS Kesehatan
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="file" class="form-control" id="path_bpjs_kesehatan" name="path_bpjs_kesehatan" accept="image/*" required <?= $is_disabled ? "disabled" : ""; ?> />
+                                    <!-- <input type="file" class="form-control" id="path_bpjs_kesehatan" name="path_bpjs_kesehatan" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" <?= $is_disabled ? "disabled" : ""; ?> /> -->
+                                    <input type="file" class="form-control" id="path_bpjs_kesehatan" name="path_bpjs_kesehatan" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" required <?= $is_disabled ? "disabled" : ""; ?> />
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4">
@@ -210,7 +234,8 @@ if ($nr == 1) {
                                         Buku Tabungan
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="file" class="form-control" id="path_buku_tabungan" name="path_buku_tabungan" accept="image/*" required <?= $is_disabled ? "disabled" : ""; ?> />
+                                    <!-- <input type="file" class="form-control" id="path_buku_tabungan" name="path_buku_tabungan" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" <?= $is_disabled ? "disabled" : ""; ?> /> -->
+                                    <input type="file" class="form-control" id="path_buku_tabungan" name="path_buku_tabungan" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" required <?= $is_disabled ? "disabled" : ""; ?> />
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4">
@@ -219,7 +244,8 @@ if ($nr == 1) {
                                         Buku Nikah
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="file" class="form-control" id="path_buku_nikah" name="path_buku_nikah" accept="image/*" required <?= $is_disabled ? "disabled" : ""; ?> />
+                                    <!-- <input type="file" class="form-control" id="path_buku_nikah" name="path_buku_nikah" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" <?= $is_disabled ? "disabled" : ""; ?> /> -->
+                                    <input type="file" class="form-control" id="path_buku_nikah" name="path_buku_nikah" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" required <?= $is_disabled ? "disabled" : ""; ?> />
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4">
@@ -228,7 +254,8 @@ if ($nr == 1) {
                                         Sertifikat Vaksin
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="file" class="form-control" id="path_sertifikat_vaksin" name="path_sertifikat_vaksin" accept="image/*" required <?= $is_disabled ? "disabled" : ""; ?> />
+                                    <!-- <input type="file" class="form-control" id="path_sertifikat_vaksin" name="path_sertifikat_vaksin" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" <?= $is_disabled ? "disabled" : ""; ?> /> -->
+                                    <input type="file" class="form-control" id="path_sertifikat_vaksin" name="path_sertifikat_vaksin" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" required <?= $is_disabled ? "disabled" : ""; ?> />
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4">
@@ -237,7 +264,8 @@ if ($nr == 1) {
                                         SKCK
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="file" class="form-control" id="path_skck" name="path_skck" accept="image/*" required <?= $is_disabled ? "disabled" : ""; ?> />
+                                    <!-- <input type="file" class="form-control" id="path_skck" name="path_skck" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" <?= $is_disabled ? "disabled" : ""; ?> /> -->
+                                    <input type="file" class="form-control" id="path_skck" name="path_skck" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" required <?= $is_disabled ? "disabled" : ""; ?> />
                                 </div>
                             </div>
                         </div>

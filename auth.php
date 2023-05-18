@@ -34,8 +34,18 @@ try {
 
     $row = $query->fetchObject();
 
-    if ($row->status != 1) {
-        $msg = "Warning status $row->status";
+    if ((int) $row->status != 3) {
+        if ((int) $row->status == 0) {
+            $msg = "Lamaran ditolak";
+        } elseif ((int) $row->status == 1) {
+            $msg = "Lamaran sedang dalam proses pengecekan";
+        } elseif ((int) $row->status == 2) {
+            $msg = "Lamaran sedang dalam proses pengecekan";
+        } elseif (in_array((int) $row->status, [4, 5, 6, 7])) {
+            $msg = "Lamaran sudah diterima, kamu tidak perlu melengkapi data kembali";
+        } else {
+            $msg = "Warning unknown status $row->status, please contact admin";
+        }
         throw new ErrorException($msg, 500);
     }
 

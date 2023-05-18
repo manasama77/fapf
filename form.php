@@ -1,17 +1,16 @@
 <?php
-session_start();
 require("koneksi.php");
 require_once('constants.php');
 require_once('class/c_list_job.php');
 
 if (!$_GET['id']) {
     session_destroy();
-    header("location:job-list.php");
+    header("Location:" . APP_URL . "/job-list.php");
 }
 
 $id = $_GET['id'];
 
-$c_list_jobs = new CListJob();
+$c_list_jobs = new CListJob($conn);
 $job         = $c_list_jobs->show($id);
 
 $posisi     = $job['kode_jabatan'];
@@ -123,39 +122,44 @@ if (!file_exists($_FILES['file_surat']['tmp_name']) || !is_uploaded_file($_FILES
 
 if ($error == 1) {
     $_SESSION['old'] = $_POST;
-    return header('location: job-apply.php?id=' . $id);
+    return header('Location:' . APP_URL . '/job-apply.php?id=' . $id);
 }
 
 if (isset($_POST['submit'])) {
+    $target_dir  = 'upload/pelamar/' . date('Y-m-d') . '-' . $_POST['fname'] . ' ' . $_POST['lname'] . "/";
 
-    $target_dir  = "upload/file_cv/";
-    $cv_filename = basename(time() . $_FILES["file"]["name"]);
-    $target_file = $target_dir . $cv_filename;
+    if (!is_dir($target_dir)) {
+        mkdir($target_dir, 0777, true);
+    }
 
-    $target_dir_surat  = "upload/file_surat/";
-    $file_surat        = basename(time() . $_FILES["file_surat"]["name"]);
-    $target_file_surat = $target_dir_surat . $file_surat;
+    $cv_filename = basename(time() . '-CV-' . $_POST['fname'] . ' ' . $_POST['lname'] . '.' . pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION));
+    $cv_file = $target_dir . $cv_filename;
 
-    if (!move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
-        $msg                  = "Upload CV Failed, please try reupload again...";
-        $_SESSION['err_file'] = $msg;
-        $_SESSION['old']      = $_POST;
-        return header('location: job-apply.php' . $id);
-    } elseif (!move_uploaded_file($_FILES["file_surat"]["tmp_name"], $target_file_surat)) {
-        $msg                        = "Upload Application Letter Failed, please try reupload again...";
-        $_SESSION['err_file_surat'] = $msg;
-        $_SESSION['old']            = $_POST;
-        return header('location: job-apply.php' . $id);
-    } elseif (file_exists($target_file)) {
+    $surat_lamaran_filename        = basename(time() . '-SURAT LAMARAN-' . $_POST['fname'] . ' ' . $_POST['lname'] . '.' . pathinfo($_FILES["file_surat"]["name"], PATHINFO_EXTENSION));
+    $surat_lamaran_file = $target_dir . $surat_lamaran_filename;
+
+    if (file_exists($cv_file)) {
         $msg                  = "File CV already exist, please rename the file or try another file...";
         $_SESSION['err_file'] = $msg;
         $_SESSION['old']      = $_POST;
-        return header('location: job-apply.php' . $id);
-    } elseif (file_exists($target_file_surat)) {
+        return header('Location:' . APP_URL . '/job-apply.php' . $id);
+    } elseif (!move_uploaded_file($_FILES["file"]["tmp_name"], $cv_file)) {
+        $msg                  = "Upload CV Failed, please try reupload again...";
+        $_SESSION['err_file'] = $msg;
+        $_SESSION['old']      = $_POST;
+        return header('Location:' . APP_URL . '/job-apply.php' . $id);
+    }
+
+    if (file_exists($surat_lamaran_file)) {
         $msg                        = "File Application Letter already exist, please rename the file or try another file...";
         $_SESSION['err_file_surat'] = $msg;
         $_SESSION['old']            = $_POST;
-        return header('location: job-apply.php' . $id);
+        return header('Location:' . APP_URL . '/job-apply.php' . $id);
+    } elseif (!move_uploaded_file($_FILES["file_surat"]["tmp_name"], $surat_lamaran_file)) {
+        $msg                        = "Upload Application Letter Failed, please try reupload again...";
+        $_SESSION['err_file_surat'] = $msg;
+        $_SESSION['old']            = $_POST;
+        return header('Location:' . APP_URL . '/job-apply.php' . $id);
     }
 
     $tgl_input          = date("Y-m-d H:i:s");
@@ -181,8 +185,8 @@ if (isset($_POST['submit'])) {
     $pengalaman         = $_POST['pengalaman'];
     $pengalaman_kebun   = $_POST['pengalaman_kebun'];
     $lokasi_kalimantan  = $_POST['lokasi_kalimantan'];
-    $file_cv            = $_FILES["file"]["name"];
-    $file_surat         = $_FILES["file_surat"]["name"];
+    $file_cv            = $cv_filename;
+    $file_surat         = $surat_lamaran_filename;
 
     $sql = "
     INSERT INTO t_pelamar 
@@ -242,7 +246,23 @@ if (isset($_POST['submit'])) {
         pengalaman_kebun,
         lokasi_kalimantan,
         tgl_interview,
-        activation_code
+        activation_code,
+        t_job_vacant_id,
+        path_foto,
+        path_ktp,
+        path_akta_kelahiran,
+        path_ijasah,
+        path_transkrip_nilai,
+        path_setifikat_pelatihan,
+        path_surat_pengalaman_kerja,
+        path_slip_gaji,
+        path_npwp,
+        path_bpjs_tk,
+        path_bpjs_kesehatan,
+        path_buku_tabungan,
+        path_buku_nikah,
+        path_sertifikat_vaksin,
+        path_skck
     ) VALUES (
         '$tgl_input',
         '$email_address',
@@ -299,6 +319,22 @@ if (isset($_POST['submit'])) {
         '$pengalaman_kebun',
         '$lokasi_kalimantan',
         null,
+        null,
+        $id,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
         null
     )";
 
@@ -308,12 +344,12 @@ if (isset($_POST['submit'])) {
         $msg             = "Terjadi kesalahan dengan server silahkan coba kembali...";
         $_SESSION['err'] = $msg;
         $_SESSION['old'] = $_POST;
-        return header('location: job-apply.php' . $id);
+        return header('Location:' . APP_URL . '/job-apply.php?id=' . $id);
     }
 
     $conn->close();
     session_destroy();
-    return header('location:job-apply-finish.php');
+    return header('Location:' . APP_URL . '/job-apply-finish.php');
 
     // echo $sql;
     // exit;

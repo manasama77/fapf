@@ -3,9 +3,9 @@ class CListJob
 {
     protected $conn;
 
-    public function __construct()
+    public function __construct($conn)
     {
-        require('./koneksi.php');
+        // require('./koneksi.php');
         $this->conn = $conn;
     }
 

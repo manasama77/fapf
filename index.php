@@ -2,9 +2,10 @@
 session_start();
 session_destroy();
 
+require_once('koneksi.php');
 require_once('constants.php');
 require_once('class/c_list_job.php');
-$c_list_jobs = new CListJob();
+$c_list_jobs = new CListJob($conn);
 $unique_lokasis = $c_list_jobs->get_unique_lokasi();
 ?>
 

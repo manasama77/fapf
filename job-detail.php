@@ -2,6 +2,7 @@
 session_start();
 session_destroy();
 
+require_once('koneksi.php');
 require_once('constants.php');
 require_once('class/c_list_job.php');
 
@@ -11,7 +12,7 @@ if ($id == "") {
     return header("location:" . APP_URL . "/job-list.php");
 }
 
-$c_list_jobs = new CListJob();
+$c_list_jobs = new CListJob($conn);
 
 $job = $c_list_jobs->show($id);
 
