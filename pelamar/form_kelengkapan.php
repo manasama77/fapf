@@ -202,49 +202,49 @@ if (!is_dir($target_dir)) {
     mkdir($target_dir, 0777, true);
 }
 
-$path_foto_filename = $target_dir . basename(rand() . '-FOTO-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_foto"]["name"], PATHINFO_EXTENSION));
+$path_foto_filename = basename(rand() . '-FOTO-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_foto"]["name"], PATHINFO_EXTENSION));
 $path_foto_file = $target_dir . $path_foto_filename;
 
-$path_ktp_filename = $target_dir . basename(rand() . '-KTP-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_ktp"]["name"], PATHINFO_EXTENSION));
+$path_ktp_filename = basename(rand() . '-KTP-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_ktp"]["name"], PATHINFO_EXTENSION));
 $path_ktp_file = $target_dir . $path_ktp_filename;
 
-$path_akta_kelahiran_filename = $target_dir . basename(rand() . '-AKTA KELAHIRAN-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_akta_kelahiran"]["name"], PATHINFO_EXTENSION));
+$path_akta_kelahiran_filename = basename(rand() . '-AKTA KELAHIRAN-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_akta_kelahiran"]["name"], PATHINFO_EXTENSION));
 $path_akta_kelahiran_file = $target_dir . $path_akta_kelahiran_filename;
 
-$path_ijasah_filename = $target_dir . basename(rand() . '-IJASAH-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_ijasah"]["name"], PATHINFO_EXTENSION));
+$path_ijasah_filename = basename(rand() . '-IJASAH-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_ijasah"]["name"], PATHINFO_EXTENSION));
 $path_ijasah_file = $target_dir . $path_ijasah_filename;
 
-$path_transkrip_nilai_filename = $target_dir . basename(rand() . '-TRANSKRIP NILAI-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_transkrip_nilai"]["name"], PATHINFO_EXTENSION));
+$path_transkrip_nilai_filename = basename(rand() . '-TRANSKRIP NILAI-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_transkrip_nilai"]["name"], PATHINFO_EXTENSION));
 $path_transkrip_nilai_file = $target_dir . $path_transkrip_nilai_filename;
 
-$path_setifikat_pelatihan_filename = $target_dir . basename(rand() . '-SERTIFIKAT PELATIHAN-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_setifikat_pelatihan"]["name"], PATHINFO_EXTENSION));
+$path_setifikat_pelatihan_filename = basename(rand() . '-SERTIFIKAT PELATIHAN-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_setifikat_pelatihan"]["name"], PATHINFO_EXTENSION));
 $path_setifikat_pelatihan_file = $target_dir . $path_setifikat_pelatihan_filename;
 
-$path_surat_pengalaman_kerja_filename = $target_dir . basename(rand() . '-SURAT PENGALAMAN KERJA-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_surat_pengalaman_kerja"]["name"], PATHINFO_EXTENSION));
+$path_surat_pengalaman_kerja_filename = basename(rand() . '-SURAT PENGALAMAN KERJA-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_surat_pengalaman_kerja"]["name"], PATHINFO_EXTENSION));
 $path_surat_pengalaman_kerja_file = $target_dir . $path_surat_pengalaman_kerja_filename;
 
-$path_slip_gaji_filename = $target_dir . basename(rand() . '-SLIP GAJI-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_slip_gaji"]["name"], PATHINFO_EXTENSION));
+$path_slip_gaji_filename = basename(rand() . '-SLIP GAJI-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_slip_gaji"]["name"], PATHINFO_EXTENSION));
 $path_slip_gaji_file = $target_dir . $path_slip_gaji_filename;
 
-$path_npwp_filename = $target_dir . basename(rand() . '-NPWP-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_npwp"]["name"], PATHINFO_EXTENSION));
+$path_npwp_filename = basename(rand() . '-NPWP-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_npwp"]["name"], PATHINFO_EXTENSION));
 $path_npwp_file = $target_dir . $path_npwp_filename;
 
-$path_bpjs_tk_filename = $target_dir . basename(rand() . '-BPJS TK-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_bpjs_tk"]["name"], PATHINFO_EXTENSION));
+$path_bpjs_tk_filename = basename(rand() . '-BPJS TK-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_bpjs_tk"]["name"], PATHINFO_EXTENSION));
 $path_bpjs_tk_file = $target_dir . $path_bpjs_tk_filename;
 
-$path_bpjs_kesehatan_filename = $target_dir . basename(rand() . '-BPJS KESEHATAN-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_bpjs_kesehatan"]["name"], PATHINFO_EXTENSION));
+$path_bpjs_kesehatan_filename = basename(rand() . '-BPJS KESEHATAN-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_bpjs_kesehatan"]["name"], PATHINFO_EXTENSION));
 $path_bpjs_kesehatan_file = $target_dir . $path_bpjs_kesehatan_filename;
 
-$path_buku_tabungan_filename = $target_dir . basename(rand() . '-BUKU TABUNGAN-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_buku_tabungan"]["name"], PATHINFO_EXTENSION));
+$path_buku_tabungan_filename = basename(rand() . '-BUKU TABUNGAN-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_buku_tabungan"]["name"], PATHINFO_EXTENSION));
 $path_buku_tabungan_file = $target_dir . $path_buku_tabungan_filename;
 
-$path_buku_nikah_filename = $target_dir . basename(rand() . '-BUKU NIKAH-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_buku_nikah"]["name"], PATHINFO_EXTENSION));
+$path_buku_nikah_filename = basename(rand() . '-BUKU NIKAH-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_buku_nikah"]["name"], PATHINFO_EXTENSION));
 $path_buku_nikah_file = $target_dir . $path_buku_nikah_filename;
 
-$path_sertifikat_vaksin_filename = $target_dir . basename(rand() . '-SERTIFIKAT VAKSIN-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_sertifikat_vaksin"]["name"], PATHINFO_EXTENSION));
+$path_sertifikat_vaksin_filename = basename(rand() . '-SERTIFIKAT VAKSIN-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_sertifikat_vaksin"]["name"], PATHINFO_EXTENSION));
 $path_sertifikat_vaksin_file = $target_dir . $path_sertifikat_vaksin_filename;
 
-$path_skck_filename = $target_dir . basename(rand() . '-SKCK-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_skck"]["name"], PATHINFO_EXTENSION));
+$path_skck_filename = basename(rand() . '-SKCK-' . $_SESSION['nama_lengkap'] . '.' . pathinfo($_FILES["path_skck"]["name"], PATHINFO_EXTENSION));
 $path_skck_file = $target_dir . $path_skck_filename;
 
 if (file_exists($path_foto_file)) {
@@ -449,21 +449,21 @@ SET
     tgl_update = '%s'
 WHERE email = '%s' AND id = %s
 ",
-    $path_foto_filename,
-    $path_ktp_filename,
-    $path_akta_kelahiran_filename,
-    $path_ijasah_filename,
-    $path_transkrip_nilai_filename,
-    $path_setifikat_pelatihan_filename,
-    $path_surat_pengalaman_kerja_filename,
-    $path_slip_gaji_filename,
-    $path_npwp_filename,
-    $path_bpjs_tk_filename,
-    $path_bpjs_kesehatan_filename,
-    $path_buku_tabungan_filename,
-    $path_buku_nikah_filename,
-    $path_sertifikat_vaksin_filename,
-    $path_skck_filename,
+    $path_foto_file,
+    $path_ktp_file,
+    $path_akta_kelahiran_file,
+    $path_ijasah_file,
+    $path_transkrip_nilai_file,
+    $path_setifikat_pelatihan_file,
+    $path_surat_pengalaman_kerja_file,
+    $path_slip_gaji_file,
+    $path_npwp_file,
+    $path_bpjs_tk_file,
+    $path_bpjs_kesehatan_file,
+    $path_buku_tabungan_file,
+    $path_buku_nikah_file,
+    $path_sertifikat_vaksin_file,
+    $path_skck_file,
     date('Y-m-d H:i:s'),
     $_SESSION['email'],
     $_SESSION['t_pelamar_id'],
