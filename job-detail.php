@@ -4,7 +4,7 @@ session_destroy();
 
 require_once('koneksi.php');
 require_once('constants.php');
-require_once('class/c_list_job.php');
+require_once('class/C_list_job.php');
 
 $id = ($_GET['id']) ?? null;
 

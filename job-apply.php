@@ -3,7 +3,7 @@ session_start();
 
 require_once('koneksi.php');
 require_once('constants.php');
-require_once('class/c_list_job.php');
+require_once('class/C_list_job.php');
 
 if (!$_GET['id']) {
     session_destroy();

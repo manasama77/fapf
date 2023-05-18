@@ -1,7 +1,7 @@
 <?php
 
 require_once('constants.php');
-require_once('class/c_list_job.php');
+require_once('class/C_list_job.php');
 $lokasi = ($_GET['lokasi']) ?? null;
 $c_list_jobs = new CListJob($lokasi);
 

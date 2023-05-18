@@ -4,7 +4,7 @@ session_destroy();
 
 require_once('koneksi.php');
 require_once('constants.php');
-require_once('class/c_list_job.php');
+require_once('class/C_list_job.php');
 $halaman = ($_GET['halaman']) ?? 1;
 $lokasi = ($_GET['lokasi']) ?? null;
 $keyword = ($_GET['keyword']) ?? null;
