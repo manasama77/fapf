@@ -126,7 +126,7 @@ if ($error == 1) {
 }
 
 if (isset($_POST['submit'])) {
-    $target_dir  = 'upload/pelamar/' . date('Y-m-d') . '-' . $_POST['fname'] . ' ' . $_POST['lname'] . "/";
+    $target_dir  = 'upload/pelamar/' . date('Y-m-d') . '-' . rand() . '-' . $_POST['fname'] . ' ' . $_POST['lname'] . "/";
 
     if (!is_dir($target_dir)) {
         mkdir($target_dir, 0777, true);
