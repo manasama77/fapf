@@ -78,9 +78,6 @@ if ($nr == 1) {
                         Kota: <?= $row->lokasi; ?>
                     </p>
                     <p>
-                        Tanggal Interview: <?= $tgl_interview_obj->format('d-m-Y'); ?>
-                    </p>
-                    <p>
                         Status Kelengkapan:
                         <?php
                         if (statusKelengkapan($row)) {
