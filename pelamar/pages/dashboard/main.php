@@ -104,7 +104,7 @@ if ($nr == 1) {
                     ?>
                 </div>
             <?php } ?>
-            <form action="<?= APP_URL; ?>/pelamar/form_kelengkapan.php" method="post" enctype="multipart/form-data">
+            <form action="<?= APP_URL; ?>/form_kelengkapan.php" method="post" enctype="multipart/form-data">
                 <input type="hidden" id="token" name="token" value="<?= $_SESSION['token'] ?? ''; ?>" />
                 <?php
                 $is_disabled = statusKelengkapan($row);
