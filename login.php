@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once('constants.php');
 
 $_SESSION['token'] = md5(uniqid(mt_rand(), true));
 ?>
