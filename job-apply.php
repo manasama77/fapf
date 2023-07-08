@@ -734,6 +734,15 @@ if (isset($_SESSION['old'])) {
                     </h1>
                 </div>
                 </br>
+                <span class="text-danger">
+                    <?php
+                    if (isset($_SESSION['err'])) {
+                        echo $_SESSION['err'];
+                        unset($_SESSION['err']);
+                    }
+                    ?>
+                </span>
+                <br />
                 <h4>I. Biographical </h4>
 
                 <div class="colums">
@@ -767,8 +776,8 @@ if (isset($_SESSION['old'])) {
                         <label for="jk">Sex<span>*</span></label>
                         <select name="jk" required>
                             <option value=""></option>
-                            <option <?= $old['jk'] == "Male" ? "selected" : ""; ?> value=" Male">Male</option>
-                            <option <?= $old['jk'] == "Female" ? "selected" : ""; ?> value="Female">Female</option>
+                            <option <?php echo ($old['jk'] == 'Male') ?  "selected" : null; ?> value="Male">Male</option>
+                            <option <?php echo ($old['jk'] == 'Female') ?  "selected" : null; ?> value="Female">Female</option>
                         </select>
                         <span class="text-danger">
                             <?php
@@ -906,7 +915,7 @@ if (isset($_SESSION['old'])) {
                     </div>
                     <div class="item">
                         <label for="ipk">GPA/IPK<span>*</span></label>
-                        <input id="ipk" type="text" name="ipk" value="<?= $old['ipk']; ?>" required />
+                        <input id="ipk" type="number" name="ipk" value="<?= $old['ipk']; ?>" min="1" max="4" step="0.1" required />
                         <span class="text-danger">
                             <?php
                             if (isset($_SESSION['err_jurusan'])) {
@@ -918,7 +927,7 @@ if (isset($_SESSION['old'])) {
                     </div>
                     <div class="item">
                         <label for="max_ipk">Max GPA/IPK<span>*</span></label>
-                        <input id="max_ipk" type="text" name="max_ipk" value="<?= $old['max_ipk']; ?>" required />
+                        <input id="max_ipk" type="number" name="max_ipk" value="<?= $old['max_ipk']; ?>" min="1" max="4" step="0.1" required />
                         <span class="text-danger">
                             <?php
                             if (isset($_SESSION['err_max_ipk'])) {
@@ -1076,15 +1085,6 @@ if (isset($_SESSION['old'])) {
                 </label>
                 <div class="btn-block">
                     <button type="submit" name="submit">Submit</button>
-                    </br>
-                    <span class="text-danger">
-                        <?php
-                        if (isset($_SESSION['err'])) {
-                            echo $_SESSION['err'];
-                            unset($_SESSION['err']);
-                        }
-                        ?>
-                    </span>
                 </div>
             </form>
         </div>

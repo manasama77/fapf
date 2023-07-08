@@ -50,21 +50,17 @@ try {
         throw new ErrorException($msg, 500);
     }
 
-    // if ($row->login_code != $password) {
-    //     $msg = "Email atau Activation Code salah, silahkan coba kembali.";
-    //     throw new ErrorException($msg, 500);
-    // }
-
     unset($_SESSION['token']);
 
     $_SESSION['t_pelamar_id'] = $row->id;
     $_SESSION['email']        = $row->email;
     $_SESSION['nama_lengkap'] = $row->nama_lengkap;
-
-    return header('location:pelamar/dashboard.php');
+    session_write_close();
+    header('location:pelamar/dashboard.php');
 } catch (Exception $e) {
     $_SESSION['error'] = true;
     $_SESSION['code']  = $e->getCode();
     $_SESSION['msg']   = $e->getMessage();
-    return header('location:login.php');
+    session_write_close();
+    header('location:login.php');
 }
