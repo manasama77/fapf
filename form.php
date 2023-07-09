@@ -1,7 +1,14 @@
 <?php
+
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\PHPMailer;
+
 require("koneksi.php");
 require_once('constants.php');
 require_once('class/C_list_job.php');
+require 'vendor/autoload.php';
+
+$mail = new PHPMailer(true);
 
 try {
     if (!$_GET['id']) {
@@ -14,8 +21,9 @@ try {
     $c_list_jobs = new CListJob($conn);
     $job         = $c_list_jobs->show($id);
 
-    $posisi     = $job['kode_jabatan'];
-    $penempatan = $job['lokasi'];
+    $posisi       = $job['kode_jabatan'];
+    $nama_jabatan = $job['nama_jabatan'];
+    $penempatan   = $job['lokasi'];
 
     //validasi
     $error = 0;
@@ -192,7 +200,7 @@ try {
             path_akta_kelahiran,
             path_ijasah,
             path_transkrip_nilai,
-            path_setifikat_pelatihan,
+            path_sertifikat_pelatihan,
             path_surat_pengalaman_kerja,
             path_slip_gaji,
             path_npwp,
@@ -290,6 +298,45 @@ try {
 
         $conn->close();
         session_destroy();
+
+        // SEND EMAIL
+        $mail->SMTPDebug = SMTP::DEBUG_OFF;
+        $mail->isSMTP();
+        $mail->Host        = 'mail.fap-agri.com';
+        $mail->SMTPAuth    = true;
+        $mail->Username    = 'noreply@fap-agri.com';
+        $mail->Password    = 'FAP2023vip';
+        $mail->SMTPSecure  = null;
+        $mail->Port        = 587;
+        $mail->SMTPAutoTLS = true;
+
+        //Recipients
+        $mail->setFrom('noreply@fap-agri.com');
+        $mail->addAddress($email);
+
+        //Content
+
+        $body = "Dear $nama_lengkap,<br /><br />";
+        $body .= "Terima Kasih Anda Sudah Mengajukan Lamaran Pekerjaan Fap-Agri dengan Posisi $nama_jabatan<br />";
+        $body .= "Lamaran Akan Kami Segera Kami Proses dan akan segera kami beritahukan berikutnya.<br />";
+        $body .= "Demikian dan Terima kasih.<br /><br />";
+        $body .= "Regards,<br />";
+        $body .= "Recruitment FAP AGRI";
+
+        $alt_body = "Dear $nama_lengkap,\r\n";
+        $alt_body .= "Terima Kasih Anda Sudah Mengajukan Lamaran Pekerjaan Fap-Agri dengan Posisi $nama_jabatan\r\n";
+        $alt_body .= "Lamaran Akan Kami Segera Kami Proses dan akan segera kami beritahukan berikutnya.\r\n";
+        $alt_body .= "Demikian dan Terima kasih.\r\n";
+        $alt_body .= "Regards,\r\n";
+        $alt_body .= "Recruitment FAP AGRI\r\n";
+
+        $mail->isHTML(true);
+        $mail->Subject = "Fap-Agri Apply Job $nama_jabatan - Apply Job Success";
+        $mail->Body    = $body;
+        $mail->AltBody = $alt_body;
+
+        $mail->send();
+
         return header('Location:' . APP_URL . '/job-apply-finish.php');
     } else {
         session_destroy();
