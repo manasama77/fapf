@@ -315,20 +315,21 @@ try {
         $mail->addAddress($email);
 
         //Content
-
         $body = "Dear $nama_lengkap,<br /><br />";
-        $body .= "Terima Kasih Anda Sudah Mengajukan Lamaran Pekerjaan Fap-Agri dengan Posisi $nama_jabatan<br />";
-        $body .= "Lamaran Akan Kami Segera Kami Proses dan akan segera kami beritahukan berikutnya.<br />";
+        $body .= "Terima Kasih Anda Sudah Mengajukan Lamaran Pekerjaan Kepada Perusahaan Fap-Agri dengan Posisi $nama_jabatan<br />";
+        $body .= "Lamaran Anda Segera Kami Proses dan Akan Memberitahukan Tahapan Selanjutnya.<br />";
         $body .= "Demikian dan Terima kasih.<br /><br />";
         $body .= "Regards,<br />";
-        $body .= "Recruitment FAP AGRI";
+        $body .= "Recruitment FAP AGRI<br/>";
+        $body .= "<a href='https://fap-agri.com' target='_blank'>https://fap-agri.com</a>";
 
         $alt_body = "Dear $nama_lengkap,\r\n";
-        $alt_body .= "Terima Kasih Anda Sudah Mengajukan Lamaran Pekerjaan Fap-Agri dengan Posisi $nama_jabatan\r\n";
+        $alt_body .= "Terima Kasih Anda Sudah Mengajukan Lamaran Pekerjaan Kepada Perusahaan Fap-Agri dengan Posisi $nama_jabatan\r\n";
         $alt_body .= "Lamaran Akan Kami Segera Kami Proses dan akan segera kami beritahukan berikutnya.\r\n";
-        $alt_body .= "Demikian dan Terima kasih.\r\n";
+        $alt_body .= "Demikian dan Terima kasih.\r\n\r\n";
         $alt_body .= "Regards,\r\n";
         $alt_body .= "Recruitment FAP AGRI\r\n";
+        $alt_body .= "https://fap-agri.com\r\n";
 
         $mail->isHTML(true);
         $mail->Subject = "Fap-Agri Apply Job $nama_jabatan - Apply Job Success";

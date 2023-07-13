@@ -1,6 +1,12 @@
 <?php
+
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\PHPMailer;
+
 require('koneksi.php');
 require_once('constants.php');
+require 'vendor/autoload.php';
+
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $_SESSION['error'] = true;
     $_SESSION['msg']   = "[405] Method not Allowed";
@@ -13,6 +19,7 @@ unset($_SESSION['wrong']);
 // define variable
 $msg   = null;
 $error = 0;
+$mail  = new PHPMailer(true);
 
 
 function unsetData($item, $key)
@@ -436,6 +443,43 @@ try {
     if (!$pdo->query($sql)) {
         throw new Exception("Tidak terhubung dengan server, silahkan coba kembali");
     }
+
+    // SEND EMAIL
+    $mail->SMTPDebug = SMTP::DEBUG_OFF;
+    $mail->isSMTP();
+    $mail->Host        = 'mail.fap-agri.com';
+    $mail->SMTPAuth    = true;
+    $mail->Username    = 'noreply@fap-agri.com';
+    $mail->Password    = 'FAP2023vip';
+    $mail->SMTPSecure  = null;
+    $mail->Port        = 587;
+    $mail->SMTPAutoTLS = true;
+
+    //Recipients
+    $mail->setFrom('noreply@fap-agri.com');
+    $mail->addAddress($_SESSION['email']);
+
+    //Content
+    $body = "Dear " . $_SESSION['nama_lengkap'] . ",<br /><br />";
+    $body .= "Terima Kasih Anda Telah Melakukan Upload Administrasi Persyaratan Dokumen Pekerjaan.<br />";
+    $body .= "Demikian dan Terima kasih.<br /><br />";
+    $body .= "Regards,<br />";
+    $body .= "Recruitment FAP AGRI<br/>";
+    $body .= "<a href='https://fap-agri.com' target='_blank'>https://fap-agri.com</a>";
+
+    $alt_body = "Dear $nama_lengkap,\r\n";
+    $alt_body .= "Terima Kasih Anda Telah Melakukan Upload Administrasi Persyaratan Dokumen Pekerjaan.\r\n";
+    $alt_body .= "Demikian dan Terima kasih.\r\n\r\n";
+    $alt_body .= "Regards,\r\n";
+    $alt_body .= "Recruitment FAP AGRI\r\n";
+    $alt_body .= "https://fap-agri.com\r\n";
+
+    $mail->isHTML(true);
+    $mail->Subject = "Fap-Agri Submit Form Kelengkapan Success";
+    $mail->Body    = $body;
+    $mail->AltBody = $alt_body;
+
+    $mail->send();
 
     unset($_SESSION['wrong']);
     return header('Location:' . APP_URL . '/pelamar/dashboard.php');
