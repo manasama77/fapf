@@ -13,6 +13,7 @@ $email    = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
 $password = filter_var($_POST['password'], FILTER_VALIDATE_INT);
 
 var_dump($token);
+var_dump($_SESSION['token']);
 exit;
 
 if (!$token || $token !== $_SESSION['token']) {
