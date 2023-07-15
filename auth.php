@@ -1,7 +1,7 @@
 <?php
 require('koneksi.php');
 
-var_dump($_SESSION['token']);
+var_dump($_SESSION);
 exit;
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
