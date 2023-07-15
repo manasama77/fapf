@@ -1,6 +1,9 @@
 <?php
 require('koneksi.php');
 
+var_dump($_SESSION['token']);
+exit;
+
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $_SESSION['error'] = true;
     $_SESSION['msg']   = "[405] Method not Allowed";
