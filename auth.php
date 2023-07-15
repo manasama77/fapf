@@ -12,6 +12,9 @@ $token    = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
 $email    = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
 $password = filter_var($_POST['password'], FILTER_VALIDATE_INT);
 
+var_dump($token);
+exit;
+
 if (!$token || $token !== $_SESSION['token']) {
     $_SESSION['error'] = true;
     $_SESSION['msg']   = "[405] Method not Allowed";
