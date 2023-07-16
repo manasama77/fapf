@@ -5,6 +5,7 @@ use App\Http\Controllers\JobApplyController;
 use App\Http\Controllers\JobListController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -19,3 +20,5 @@ Route::post('auth', [LoginController::class, 'auth'])->name('login.auth');
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::post('store-kelengkapan', [DashboardController::class, 'store'])->name('kelengkapan.store');
+
+Route::get('test', [TestController::class, 'index'])->name('test');
