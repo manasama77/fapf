@@ -1,0 +1,362 @@
+<style>
+    .text-danger {
+        color: red;
+    }
+
+    @font-face {
+        font-family: gojekicon;
+        src: url("{{ asset('fonts/qfcnRo0rar5S.eot') }}");
+        src: url("{{ asset('fonts/SCE9CjYnMYfg.woff2') }}") format("woff2"),
+            url("{{ asset('fonts/qfcnRo0rar5S.eot#iefix') }}") format("embedded-opentype"),
+            url("{{ asset('fonts/jROGyYYgRhXA.ttf') }}") format("truetype"),
+            url("{{ asset('fonts/14JJsDtvMKWO.woff') }}") format("woff"),
+            url("{{ asset('fonts/1ib8DMby29F6.svg#gojekicon') }}") format("svg");
+        font-display: swap;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    i {
+        font-family: gojekicon !important;
+        speak: none;
+        font-style: normal;
+        font-weight: 400;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .gi-website:before {
+        content: "";
+        color: #4a4a4a;
+    }
+
+    .gi-xs {
+        font-size: 0.5rem;
+    }
+
+    .gi-sm {
+        font-size: 0.75rem;
+    }
+
+    .gi-md {
+        font-size: 1rem;
+    }
+
+    .gi-lg {
+        font-size: 1.5rem;
+    }
+
+    .gi-xl {
+        font-size: 2rem;
+    }
+
+    .gi-icon-solid-gobills:before {
+        content: "";
+    }
+
+    .gi-icon-solid-gobiz:before {
+        content: "";
+    }
+
+    .gi-icon-solid-gocar:before {
+        content: "";
+    }
+
+    .gi-icon-solid-godeals:before {
+        content: "";
+    }
+
+    .gi-icon-solid-gofood:before {
+        content: "";
+    }
+
+    .gi-icon-solid-golaundry:before {
+        content: "";
+    }
+
+    .gi-icon-solid-gopay:before {
+        content: "";
+    }
+
+    .gi-icon-solid-goplay:before {
+        content: "";
+    }
+
+    .gi-icon-solid-gopoint:before {
+        content: "";
+    }
+
+    .gi-icon-solid-goride:before {
+        content: "";
+    }
+
+    .gi-icon-solid-gosend:before {
+        content: "";
+    }
+
+    .gi-icon-solid-gotix:before {
+        content: "";
+    }
+
+    .gi-icon-gobills:before {
+        content: "";
+    }
+
+    .gi-icon-gobiz:before {
+        content: "";
+    }
+
+    .gi-icon-gocar:before {
+        content: "";
+    }
+
+    .gi-icon-godeals:before {
+        content: "";
+    }
+
+    .gi-icon-gofood:before {
+        content: "";
+    }
+
+    .gi-icon-gojek:before {
+        content: "";
+    }
+
+    .gi-icon-golaundry:before {
+        content: "";
+    }
+
+    .gi-icon-gopay:before {
+        content: "";
+    }
+
+    .gi-icon-goplay:before {
+        content: "";
+    }
+
+    .gi-icon-gopoints:before {
+        content: "";
+    }
+
+    .gi-icon-goride:before {
+        content: "";
+    }
+
+    .gi-icon-gosend:before {
+        content: "";
+    }
+
+    .gi-icon-gotix:before {
+        content: "";
+    }
+
+    .gi-account:before {
+        content: "";
+    }
+
+    .gi-code:before {
+        content: "";
+    }
+
+    .gi-dashboard:before {
+        content: "";
+    }
+
+    .gi-form:before {
+        content: "";
+    }
+
+    .gi-hi:before {
+        content: "";
+    }
+
+    .gi-logout:before {
+        content: "";
+    }
+
+    .gi-user:before {
+        content: "";
+    }
+
+    .gi-arrow-upload:before {
+        content: "";
+    }
+
+    .gi-pdf:before {
+        content: "";
+    }
+
+    .gi-calendar:before {
+        content: "";
+    }
+
+    .gi-triangle-down:before {
+        content: "";
+    }
+
+    .gi-upload:before {
+        content: "";
+    }
+
+    .gi-tick:before {
+        content: "";
+    }
+
+    .gi-error:before {
+        content: "";
+    }
+
+    .gi-search:before {
+        content: "";
+    }
+
+    .gi-arrow-up:before {
+        content: "";
+    }
+
+    .gi-arrowbar-down:before {
+        content: "";
+    }
+
+    .gi-arrowbar-left:before {
+        content: "";
+    }
+
+    .gi-arrowbar-right:before {
+        content: "";
+    }
+
+    .gi-arrowbar-up:before {
+        content: "";
+    }
+
+    .gi-caret-down:before {
+        content: "";
+    }
+
+    .gi-caret-left:before {
+        content: "";
+    }
+
+    .gi-caret-right:before {
+        content: "";
+    }
+
+    .gi-caret-up:before {
+        content: "";
+    }
+
+    .gi-menu:before {
+        content: "";
+    }
+
+    .gi-retry:before {
+        content: "";
+    }
+
+    .gi-close:before {
+        content: "";
+    }
+
+    .gi-location:before {
+        content: "";
+    }
+
+    .gi-arrow:before {
+        content: "";
+    }
+
+    .gi-facebook:before {
+        content: "";
+    }
+
+    .gi-instagram:before {
+        content: "";
+    }
+
+    .gi-line:before {
+        content: "";
+    }
+
+    .gi-linkedin:before {
+        content: "";
+    }
+
+    .gi-twitter:before {
+        content: "";
+    }
+
+    .gi-web:before {
+        content: "";
+    }
+
+    .gi-youtube:before {
+        content: "";
+    }
+
+    .gi-arrow-left:before {
+        content: "";
+    }
+
+    .gi-arrow-right:before {
+        content: "";
+    }
+
+    .gi-globe:before {
+        content: "";
+    }
+
+    .gi-arrow-down:before {
+        content: "";
+    }
+
+    @font-face {
+        font-family: MaisonNeue-Book;
+        src: url("{{ asset('fonts/Gp3Gu8wkLEoN.woff2') }}") format("woff2"),
+            url("{{ asset('fonts/xThyTxm7sWw7.woff') }}") format("woff");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: MaisonNeue-Book;
+        src: url("{{ asset('fonts/Uc2VRdBZy1LT.woff2') }}") format("woff2"),
+            url("{{ asset('fonts/ucIrMWzejGLx.woff') }}") format("woff");
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: MaisonNeue-Book;
+        src: url("{{ asset('fonts/0H0Hf1QJQ1jY.woff2') }}") format("woff2"),
+            url("{{ asset('fonts/QD4B26PtZ1ey.woff') }}") format("woff");
+        font-weight: 400;
+        font-style: italic;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: MaisonNeue-Demi;
+        src: url("{{ asset('fonts/tVyS8nB6UCxh.woff2') }}") format("woff2"),
+            url("{{ asset('fonts/bot9UupgwCcq.woff') }}") format("woff");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: MaisonNeueExtended-Bold;
+        src: url("{{ asset('fonts/LYGCnF2fWDyl.woff2') }}") format("woff2"),
+            url("{{ asset('fonts/YhLJbKx1ap7t.woff') }}") format("woff");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    /*# sourceMappingURL=maps/fonts.css.map */
+</style>
