@@ -35,7 +35,7 @@ class JobListController extends Controller
             $job_lists->where('t_jabatan.nama_jabatan', 'like', '%' . $request->keyword . '%');
         }
 
-        $job_lists = $job_lists->paginate(1);
+        $job_lists = $job_lists->paginate(10);
 
         $job_lists = $job_lists->appends([
             'lokasi'  => $request->lokasi ?? null,
