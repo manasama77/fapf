@@ -116,7 +116,7 @@
                     <div class="item">
                         <label for="ipk">GPA/IPK<span>*</span></label>
                         <input id="ipk" type="number" name="ipk" value="{{ old('ipk') }}" min="1"
-                            max="4" step="0.1" required />
+                            max="4" step="0.01" required />
                     </div>
                     <div class="item">
                         <label for="max_ipk">Max GPA/IPK<span>*</span></label>

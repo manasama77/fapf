@@ -5,8 +5,8 @@
         <div class="row js-slider-banner" data-slider-dot="true">
             <div class="col c-banner-slider--hero__wrapper">
                 <picture>
-                    <source src="{{ asset('images/banner-fap-agri.jpeg') }}" srcset="{{ asset('images/banner-fap-agri.jpeg') }}"
-                        media="(min-width: 769px)" alt="FAP-AGRI-CAREER" />
+                    <source src="{{ asset('images/banner-fap-agri.jpeg') }}"
+                        srcset="{{ asset('images/banner-fap-agri.jpeg') }}" media="(min-width: 769px)" alt="FAP-AGRI-CAREER" />
                     <img data-src="{{ asset('images/hero-banner.jpg') }}" class="lazy" alt="FAP-AGRI-CAREER" />
                 </picture>
                 <div class="container">
@@ -37,12 +37,12 @@
 
                 <h4 class="mt-2">Job Description</h4>
                 <p>
-                    {{ $job_lists->informasi_pekerjaan }}
+                    {{ $job_lists->tugas }}
                 </p>
 
-                <h4 class="mt-2">Key Responsibilities</h4>
+                <h4 class="mt-2">Criteria</h4>
                 <p>
-                    {{ $job_lists->tugas }}
+                    {{ $job_lists->kriteria }}
                 </p>
 
                 <div class="d-flex flex-column justify-content-center align-items-center mt-5">
@@ -66,7 +66,7 @@
                             date:<br />{{ Carbon\Carbon::parse($job_lists->tgl_posted)->diffForHumans() }}</p>
                         <p class="mb-2">Expiration
                             date:<br />{{ Carbon\Carbon::parse($job_lists->tgl_dibutuhkan)->format('d/M/Y') }}</p>
-                        <p class="mb-2">Departemen:<br />{{ $job_lists->nama_departemen }}</p>
+                        <p class="mb-2">Departemen:<br />{{ $job_lists->departemen }}</p>
                         <p class="mb-2">Location:<br />{{ $job_lists->lokasi }}</p>
                         <p class="mb-2">Employee Status:<br />{{ $job_lists->status_karyawan }}</p>
                         <p class="mb-2">Experience:<br />{{ $job_lists->pengalaman }} years</p>

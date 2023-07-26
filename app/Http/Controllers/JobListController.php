@@ -65,8 +65,7 @@ class JobListController extends Controller
 
                 't_jabatan.kode_jabatan',
                 't_jabatan.nama_jabatan',
-                't_jabatan.reportTo as nama_departemen',
-                't_jabatan.posisi as informasi_pekerjaan',
+                't_jabatan.departemen',
                 't_jabatan.tugas',
                 't_jabatan.kriteria',
             ])
