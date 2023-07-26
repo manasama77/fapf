@@ -5793,7 +5793,7 @@ ol {
 
 @media screen and (min-width: 769px) {
   .btn-default--theme-gocareer:hover {
-    background: #1c9440;
+    background: #f9ae3c;
     z-index: 1;
     opacity: 1;
   }
@@ -5821,7 +5821,7 @@ ol {
 
 @media screen and (min-width: 769px) {
   .btn-outline--theme-gocareer:hover {
-    background-color: #1c9440;
+    background-color: #f7983b;
     color: #fff;
     z-index: 1;
     opacity: 1;
@@ -5830,7 +5830,7 @@ ol {
 .btn-outline--theme-gocareer:active,
 .btn-outline--theme-gocareer:focus {
   content: "";
-  background-color: #1c9440;
+  background-color: #f7983b;
   color: #fff;
   pointer-events: none;
 }

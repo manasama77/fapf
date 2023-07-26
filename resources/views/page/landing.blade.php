@@ -5,14 +5,14 @@
         <div class="row js-slider-banner" data-slider-dot="true">
             <div class="col c-banner-slider--hero__wrapper">
                 <picture>
-                    <source src="{{ asset('images/1jKsECHMBc2y.jpg') }}" srcset="{{ asset('images/1jKsECHMBc2y.jpg') }}"
+                    <source src="{{ asset('images/banner-fap-agri.jpeg') }}" srcset="{{ asset('images/banner-fap-agri.jpeg') }}"
                         media="(min-width: 769px)" alt="FAP-AGRI-CAREER" />
-                    <img data-src="{{ asset('images/hero-banner012x_3.jpg') }}" class="lazy" alt="FAP-AGRI-CAREER" />
+                    <img data-src="{{ asset('images/hero-banner.jpg') }}" class="lazy" alt="FAP-AGRI-CAREER" style="filter: brightness(75%);" />
                 </picture>
-                <div class="container">
+                <div class="container" >
                     <div class="row c-banner-slider--hero__content">
-                        <div class="col-12 col-md-5">
-                            <h1 class="mb-2">Kesempatan Berkarir Bersama FAP Agri</h1>
+                        <div class="col-12 col-md-5" style="color: #ffffff; margin-top: 230px;"  >
+                            <h1 class="mb-2" >Kesempatan Berkarir Bersama FAP Agri</h1>
                             <p>
                                 FAP Agri memiliki komitmen untuk menghasilkan produk
                                 berkualitas, ramah lingkungan dengan berpegang teguh pada tata

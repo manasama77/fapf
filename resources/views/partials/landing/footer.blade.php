@@ -47,9 +47,9 @@
                     <div class="col-12 pb-1 pb-lg-0 mb-2">Download Our App:</div>
                     <div class="row">
                         <a href="" class="col col-md-5 pr-1">
-                            <img class="col-12 lazy"
-                                data-src="https://lelogama.go-jek.com/component/nav/picture/google-play-badge3x-p.png"
-                                alt="Play Store Download Link">
+                            <img class="col-12 lazy" data-src="https://career.fap-agri.com/images/google-play-badge.png" alt="Play Store Download Link">
+                            <!--    data-src="https://lelogama.go-jek.com/component/nav/picture/google-play-badge3x-p.png"-->
+                            <!--    alt="Play Store Download Link">-->
                         </a>
 
                     </div>
