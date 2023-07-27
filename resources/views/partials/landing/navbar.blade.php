@@ -1,6 +1,6 @@
 <div class="row align-items-center c-header__menu">
     <div class="col">
-        <a href="index.php">
+        <a href="/">
             <picture class="c-header__logo">
                 <source srcset="{{ asset('images/fap-agri-career-navbar.png') }}" media="(max-width: 768px)">
                 <img src="{{ asset('images/fap-agri-career-navbar.png') }}" alt="FAP-Agri career logo">
