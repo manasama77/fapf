@@ -65,11 +65,12 @@ class JobListController extends Controller
 
                 't_jabatan.kode_jabatan',
                 't_jabatan.nama_jabatan',
-                't_jabatan.departemen',
+                't_department.nama_department',
                 't_jabatan.tugas',
                 't_jabatan.kriteria',
             ])
             ->leftJoin('t_jabatan', 't_jabatan.kode_jabatan', '=', 't_job_vacant.jabatan')
+            ->leftJoin('t_department', 't_department.kode_department', '=', 't_job_vacant.unit_kerja')
             ->where('t_job_vacant.id', $id)
             ->where('t_job_vacant.status', 1)
             ->orderBy('t_job_vacant.tgl_input', 'desc')

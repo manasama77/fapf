@@ -66,7 +66,7 @@
                             date:<br />{{ Carbon\Carbon::parse($job_lists->tgl_posted)->diffForHumans() }}</p>
                         <p class="mb-2">Expiration
                             date:<br />{{ Carbon\Carbon::parse($job_lists->tgl_dibutuhkan)->format('d/M/Y') }}</p>
-                        <p class="mb-2">Departemen:<br />{{ $job_lists->departemen }}</p>
+                        <p class="mb-2">Departemen:<br />{{ $job_lists->nama_department }}</p>
                         <p class="mb-2">Location:<br />{{ $job_lists->lokasi }}</p>
                         <p class="mb-2">Employee Status:<br />{{ $job_lists->status_karyawan }}</p>
                         <p class="mb-2">Experience:<br />{{ $job_lists->pengalaman }} years</p>
